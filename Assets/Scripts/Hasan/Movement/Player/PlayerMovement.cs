@@ -39,7 +39,7 @@ namespace SnowGlobalConflict
             //verticalDirection = new Vector3(0, 0, moveSpeed);
             onMovement += PlaySoundEffect;
         }
-
+        
         // Update is called once per frame
         void Update()
         {
@@ -100,8 +100,11 @@ namespace SnowGlobalConflict
         {
             horizontalDirection = new Vector3(horizontalSpeed, 0, 0);
             verticalDirection = new Vector3(0, 0, verticalSpeed);
+           /* if(rb.velocity.x < 50 && rb.velocity.z < 50)
+            {
 
-            //rb.AddForce((horizontalDirection + verticalDirection) * moveSpeed);
+            rb.AddForce((horizontalDirection + verticalDirection) * moveSpeed);
+            }*/
             rb.velocity = (horizontalDirection + verticalDirection) * moveSpeed;
 
         }
@@ -111,7 +114,7 @@ namespace SnowGlobalConflict
             audioSource.PlayOneShot(audioSource.clip);
             //StartCoroutine(PlaySound(audioSource));
            
-            Debug.Log("You Suck" + audioSource.clip.name);
+            Debug.Log("You Suck " + audioSource.clip.name);
         }
 
     }
