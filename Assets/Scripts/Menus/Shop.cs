@@ -15,6 +15,10 @@ namespace Menus
         public bool hasPuncher = false;
         public bool hasBroccoli = false;
 
+        public GameObject boxerButton;
+        public GameObject broccoliButton;   
+        public GameObject puncherButton;
+
         public void BoxerGuy()
         {
             if (starAmount >= 800 && hasBoxer == false)
@@ -22,6 +26,7 @@ namespace Menus
                 hasBoxer = true;
                 starAmount = starAmount - 800;
                 starText.text = "Super Stars : " + starAmount;
+                boxerButton.SetActive(false);
 
             }
         }
@@ -33,6 +38,7 @@ namespace Menus
                 hasPuncher = true;
                 starAmount = starAmount - 1200;
                 starText.text = "Super Stars : " + starAmount;
+                puncherButton.SetActive(false);
             }
         }
 
@@ -43,6 +49,7 @@ namespace Menus
                 hasBroccoli = true;
                 starAmount = starAmount - 1200;
                 starText.text = "Super Stars : " + starAmount;
+                broccoliButton.SetActive(false);
             }
         }
 
