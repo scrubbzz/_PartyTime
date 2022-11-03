@@ -26,7 +26,7 @@ namespace SnowGlobalConflict
         void Update()
         {
             TimeGame(gameTimer);
-            timerText.text = gameTimer.ToString();
+            timerText.text = "Time Left: " + gameTimer.ToString();
         }
         public override void TimeGame(float gameTimerLength)
         {

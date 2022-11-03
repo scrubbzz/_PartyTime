@@ -100,12 +100,12 @@ namespace SnowGlobalConflict
         {
             horizontalDirection = new Vector3(horizontalSpeed, 0, 0);
             verticalDirection = new Vector3(0, 0, verticalSpeed);
-           /* if(rb.velocity.x < 50 && rb.velocity.z < 50)
+            if (rb.velocity.x < 50 && rb.velocity.z < 50)
             {
 
-            rb.AddForce((horizontalDirection + verticalDirection) * moveSpeed);
-            }*/
-            rb.velocity = (horizontalDirection + verticalDirection) * moveSpeed;
+                rb.AddForce((horizontalDirection + verticalDirection) * moveSpeed);
+            }
+            //rb.velocity = (horizontalDirection + verticalDirection) * moveSpeed;
 
         }
 
