@@ -9,14 +9,16 @@ public class TargetSpawner : MonoBehaviour
     public bool spawningIsActive;
 
     public float spawnDistanceOnZ = 5;
+
     public float minPossibleSpawnTime = 5;
     public float maxPossibleSpawnTime = 5;
     float approximateSpawnTime = 5;
+    float spawnCountdown;
 
     public float gameLength = 60;
-    float spawnTimer;
 
     public List<GameObject> spawnableTargets = new List<GameObject>();
+    List<GameObject> inSceneTargets = new List<GameObject>();
 
 
     public TextMeshProUGUI testTimer;
@@ -24,19 +26,20 @@ public class TargetSpawner : MonoBehaviour
 
     private void Update()
     {
-        testTimer.text = "" + gameLength;
-
-        spawnTimer += Time.deltaTime;
-
-
+        
         if (spawningIsActive)
         {
+            float time = Mathf.FloorToInt(gameLength % 60);
+            testTimer.text = "" + time;
+
+            spawnCountdown += Time.deltaTime;
+
             gameLength -= Time.deltaTime;
 
-            if (spawnTimer > approximateSpawnTime)
+            if (spawnCountdown > approximateSpawnTime)
             {
                 GenerateTarget();
-                spawnTimer = 0;
+                spawnCountdown = 0;
                 approximateSpawnTime = Random.Range(minPossibleSpawnTime, maxPossibleSpawnTime);
             }
         }
@@ -44,6 +47,7 @@ public class TargetSpawner : MonoBehaviour
         if (gameLength <= 0 && spawningIsActive)
         {
             spawningIsActive = false;
+            testTimer.text = "Time's up!";
             Debug.Log("Time's up!");
         }
 
@@ -70,8 +74,10 @@ public class TargetSpawner : MonoBehaviour
         if (generatedTarget == null)
             Debug.LogError("something went wrong with spawning the target.");
         else
+        {
             generatedTarget.AddComponent<ShooterTarget>();
 
+        }
         
     }
 }

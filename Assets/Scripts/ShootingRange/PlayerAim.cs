@@ -73,8 +73,8 @@ public class PlayerAim : MonoBehaviour
 
     void Update()
     {
-        xInput += Input.GetAxis(horizontalInput);
-        yInput += Input.GetAxis(verticalInput);
+        xInput = Input.GetAxis(horizontalInput);
+        yInput = Input.GetAxis(verticalInput);
 
 
         //cursorImage.rectTransform.position = new Vector3(xInput * 6, yInput * 6);
@@ -95,8 +95,11 @@ public class PlayerAim : MonoBehaviour
             chargeValue = Mathf.MoveTowards(chargeValue, chargeLimit, chargeSpeed * Time.deltaTime);
             chargeValue = Mathf.Clamp(chargeValue, 0, chargeLimit);
 
-            arrowInstance.transform.LookAt(Input.mousePosition);
+            //arrowInstance.transform.Rotate(new Vector3(-yInput * arrowMovementFactor, xInput * arrowMovementFactor));
+            Ray aim = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(aim, out hit, 50);
 
+            arrowInstance.transform.LookAt(hit.point);
             //Vector3 aimPoint = Camera.main.ScreenToViewportPoint(cursorImage.transform.position);
 
             //arrowInstance.transform.Rotate(Vector3.up, xInput * 0.25f);
@@ -109,14 +112,14 @@ public class PlayerAim : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
 
-            Ray aim = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(aim, out hit, 50); // set the hit variable via raycasting
+            //Ray aim = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //Physics.Raycast(aim, out hit, 50); // set the hit variable via raycasting
 
 
             arrowRB.useGravity = true;
             arrowRB.isKinematic = false;
 
-            arrowInstance.transform.LookAt(hit.collider.transform.position);
+            //arrowInstance.transform.LookAt(hit.point);
             arrowRB.AddForce(arrowInstance.transform.forward * chargeValue * arrowSpeedMultiplier);
             hasHitTarget = false;
 
