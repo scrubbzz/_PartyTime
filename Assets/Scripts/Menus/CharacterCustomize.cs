@@ -12,7 +12,7 @@ namespace Menus
 
         public Shop shop;
 
-        private void Start()
+        private void Update()
         {
             ActivateCharacterButtons();
         }

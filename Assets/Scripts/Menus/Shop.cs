@@ -19,6 +19,8 @@ namespace Menus
         public GameObject broccoliButton;   
         public GameObject puncherButton;
 
+        public GameObject inSuffFunds;
+
         public void BoxerGuy()
         {
             if (starAmount >= 800 && hasBoxer == false)
@@ -29,6 +31,7 @@ namespace Menus
                 boxerButton.SetActive(false);
 
             }
+            else { inSuffFunds.SetActive(true); }
         }
 
         public void PuncherGuy()
@@ -40,6 +43,7 @@ namespace Menus
                 starText.text = "Super Stars : " + starAmount;
                 puncherButton.SetActive(false);
             }
+            else { inSuffFunds.SetActive(true); }
         }
 
         public void BroccoliGuy()
@@ -51,6 +55,7 @@ namespace Menus
                 starText.text = "Super Stars : " + starAmount;
                 broccoliButton.SetActive(false);
             }
+            else { inSuffFunds.SetActive(true); }
         }
 
         public void IncrementStarsBy1000()
