@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Saeed.unity
-    guid: 25de5bd6ab8f9954c857f1f1f53440ad
+    path: Assets/Scenes/TitleScreen.unity
+    guid: 7b545614fde76024eb48b64c098331cd
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 449ac8cce4ed60a4aa64b403bc2fa350
+  - enabled: 1
+    path: Assets/Scenes/Shamma.unity
+    guid: a848bf06058b3a544a4456e7520266d1
   m_configObjects: {}
