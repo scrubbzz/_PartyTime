@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class PlayerAim : MonoBehaviour
 {
-
-    string horizontalInput = "Mouse X";
-    string verticalInput = "Mouse Y";
+    // input reading values
+    public string horizontalInput = "Mouse X";
+    public string verticalInput = "Mouse Y";
+    public float inputSensitivity = 5f;
     float xInput = 0f;
     float yInput = 0f;
 
@@ -16,26 +17,17 @@ public class PlayerAim : MonoBehaviour
     float chargeValue = 0f;
     public float chargeSpeed = 2f;
     public float chargeLimit = 50f;
-    public float arrowSpeedMultiplier = 1f;
 
     // arrow data
     public GameObject arrowPrefab;
-    GameObject arrowInstance;
-    Rigidbody arrowRB;
-
-    public Vector3 defaultArrowPos;
-    public Quaternion defaultArrowRot;
-
+    ArrowProjectile arrow;
 
     public float arrowResetTimer = 4.5f;
     float previousResetTime;
     bool resetTimerIsActive = false;
 
 
-    public LayerMask targetLayer;
     RaycastHit hit;
-    bool hasHitTarget;
-
 
     int coinCounter;
 
@@ -50,12 +42,13 @@ public class PlayerAim : MonoBehaviour
         chargeBar.minValue = 0;
         chargeBar.maxValue = chargeLimit;
 
-        arrowInstance = Instantiate(arrowPrefab, defaultArrowPos, Quaternion.identity);
-        arrowRB = arrowInstance.GetComponent<Rigidbody>();
+        GameObject arrowObj = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+        arrow = arrowObj.GetComponent<ArrowProjectile>();
 
-        if (arrowRB == null)
-            arrowRB = arrowInstance.AddComponent<Rigidbody>(); // make sure we've got a rigidbody on the arrow
-        
+        if (arrow == null)
+            arrow = arrowObj.AddComponent<ArrowProjectile>(); // make sure we've got a rigidbody on the arrow
+
+        arrow.player = this;
 
         previousResetTime = arrowResetTimer;
     }
@@ -65,84 +58,63 @@ public class PlayerAim : MonoBehaviour
         hit = new RaycastHit();
 
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
-        arrowRB.isKinematic = true;
-        arrowRB.useGravity = false;
-
+        xInput = Screen.width / 2;
+        yInput = Screen.height / 2;
     }
 
     void Update()
     {
-        xInput = Input.GetAxis(horizontalInput);
-        yInput = Input.GetAxis(verticalInput);
+        xInput += Input.GetAxis(horizontalInput) * inputSensitivity;
+        yInput += Input.GetAxis(verticalInput) * inputSensitivity;
 
 
-        //cursorImage.rectTransform.position = new Vector3(xInput * 6, yInput * 6);
-        cursorImage.rectTransform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
+        cursorImage.rectTransform.position = new Vector3(xInput, yInput);
+
         chargeBar.value = chargeValue;
-
         testTextForCoinCounter.text = "" + coinCounter;
 
 
-        // reset arrow
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        // reset arrow, timer and charge
         if (Input.GetMouseButtonDown(0))
         {
+            Cursor.lockState = CursorLockMode.Locked;
             ResetArrow();
         }
 
+        // increase charge, rotate arrow to raycast point
         if (Input.GetMouseButton(0))
         {
             chargeValue = Mathf.MoveTowards(chargeValue, chargeLimit, chargeSpeed * Time.deltaTime);
             chargeValue = Mathf.Clamp(chargeValue, 0, chargeLimit);
 
-            //arrowInstance.transform.Rotate(new Vector3(-yInput * arrowMovementFactor, xInput * arrowMovementFactor));
-            Ray aim = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray aim = Camera.main.ScreenPointToRay(cursorImage.transform.position);
             Physics.Raycast(aim, out hit, 50);
-
-            arrowInstance.transform.LookAt(hit.point);
-            //Vector3 aimPoint = Camera.main.ScreenToViewportPoint(cursorImage.transform.position);
-
-            //arrowInstance.transform.Rotate(Vector3.up, xInput * 0.25f);
-            //arrowInstance.transform.Rotate(Vector3.left, yInput * 0.25f);
-
-            //arrowInstance.transform.rotation = Quaternion.Euler(aimPoint.x * Input.mousePosition.x, aimPoint.y * Input.mousePosition.y, 0);
+            arrow.Aim(hit.point);
 
         }
 
+        // launch arrow, activate reset timer
         if (Input.GetMouseButtonUp(0))
         {
 
             //Ray aim = Camera.main.ScreenPointToRay(Input.mousePosition);
             //Physics.Raycast(aim, out hit, 50); // set the hit variable via raycasting
-
-
-            arrowRB.useGravity = true;
-            arrowRB.isKinematic = false;
-
-            //arrowInstance.transform.LookAt(hit.point);
-            arrowRB.AddForce(arrowInstance.transform.forward * chargeValue * arrowSpeedMultiplier);
-            hasHitTarget = false;
-
+            arrow.Fire(chargeValue);
 
             resetTimerIsActive = true;
             StartCoroutine(CountdownToArrowReset());
 
-            /*
-            if (Physics.Raycast(aim, out hit, 50, targetLayer))
-            {
-
-                ShooterTarget target = hit.collider.gameObject.GetComponent<ShooterTarget>();
-
-                coinCounter += target.CalculateDamageTaken(chargeValue, this); // add coins if target broke successfully
-            }
-            else
-                Debug.Log("didn't hit anything");
-            */
-
         }
 
         // if collided with something on the target layer
-        if (Physics.CheckBox(arrowInstance.transform.position, new Vector3(.5f, .5f, .5f), arrowInstance.transform.rotation, targetLayer) && !hasHitTarget)
+        /*if (Physics.CheckBox(arrow.transform.position, new Vector3(.5f, .5f, .5f), arrow.transform.rotation, targetLayer) && !hasHitTarget)
         {
 
             ShooterTarget target = hit.collider.gameObject.GetComponent<ShooterTarget>();
@@ -153,10 +125,25 @@ public class PlayerAim : MonoBehaviour
 
             hasHitTarget = true;
             hit = new RaycastHit();
-        }
+        }*/
 
     }
 
+    public void CheckTargetDamage(ShooterTarget target)
+    { 
+        coinCounter += target.CalculateDamageTaken(chargeValue, this); // add coins if target broke successfully
+    }
+
+    void ResetArrow()
+    {
+        arrow.ResetState();
+
+        arrowResetTimer = previousResetTime; // reset timer and charge
+        resetTimerIsActive = false;
+
+        chargeValue = 0;
+
+    }
 
     IEnumerator CountdownToArrowReset()
     {
@@ -178,26 +165,6 @@ public class PlayerAim : MonoBehaviour
         StartCoroutine(CountdownToArrowReset());
 
     }
-
-
-    void ResetArrow()
-    {
-
-        //arrowRB.isKinematic = false;
-        arrowRB.useGravity = false;
-        arrowRB.isKinematic = true;
-        arrowRB.velocity = Vector3.zero; // stop the arrow
-
-        arrowInstance.transform.position = defaultArrowPos; // reset the arrow's transform
-        arrowInstance.transform.rotation = defaultArrowRot;
-
-        arrowResetTimer = previousResetTime; // reset timer and charge
-        resetTimerIsActive = false;
-
-        chargeValue = 0;
-
-    }
-
 
 
     /*void InstantiateArrow(Ray aim, RaycastHit hit)
