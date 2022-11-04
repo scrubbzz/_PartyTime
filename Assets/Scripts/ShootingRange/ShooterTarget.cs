@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ShooterTarget : MonoBehaviour 
 {
     Vector3 direction = Vector3.zero;
@@ -13,11 +14,17 @@ public class ShooterTarget : MonoBehaviour
 
     public int valueInCoins;
 
+    public AudioClip successBreakSound;
+    public AudioClip failBreakSound;
+    public AudioClip noBreakSound;
+
     float timeActive;
 
     Renderer targetRenderer;
 
-    GameObject targetParticleObj;
+    AudioSource audioSource; // to do: implement audio interface.
+
+    GameObject targetEffectsObj;
     ParticleSystem particles;
 
     private void OnEnable()
@@ -33,11 +40,16 @@ public class ShooterTarget : MonoBehaviour
 
         targetRenderer = GetComponent<Renderer>();
 
-        targetParticleObj = transform.GetChild(0).gameObject;
-        particles = targetParticleObj.GetComponent<ParticleSystem>();
+        targetEffectsObj = transform.GetChild(0).gameObject;
+        particles = targetEffectsObj.GetComponent<ParticleSystem>();
         if (particles == null)
         {
-            Debug.LogError("you need to make sure there's one child object with a ParticlesSystem component on your target object.");
+            Debug.LogError("you need to make sure the first child object on your target object has a ParticleSystem component.");
+        }
+        audioSource = targetEffectsObj.GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("you need to make sure the first child object on your target object has an AudioSource component.");
         }
     }
 
@@ -64,8 +76,12 @@ public class ShooterTarget : MonoBehaviour
             {
                 particles.startColor = Color.yellow;
                 particles.Play();
-                transform.DetachChildren();
             }
+
+            audioSource.clip = successBreakSound;
+            audioSource.Play();
+
+            transform.DetachChildren();
 
             Destroy(gameObject);
             Debug.Log("you got " + valueInCoins + " coins!");
@@ -78,8 +94,12 @@ public class ShooterTarget : MonoBehaviour
             {
                 particles.startColor = Color.black;
                 particles.Play();
-                transform.DetachChildren();
             }
+
+            audioSource.clip = failBreakSound;
+            audioSource.Play();
+
+            transform.DetachChildren();
 
             Destroy(gameObject);
             Debug.Log("target was hit too hard");
@@ -87,6 +107,9 @@ public class ShooterTarget : MonoBehaviour
         }
         else 
         {
+            audioSource.clip = noBreakSound;
+            audioSource.Play();
+
             Debug.Log("target wasn't hit hard enough");
             return 0;
         }
