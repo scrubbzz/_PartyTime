@@ -4,9 +4,13 @@ using UnityEngine;
 
 namespace SnowGlobalConflict
 {
-    public class CoinsRotation : MonoBehaviour, IMoveable
+    [RequireComponent(typeof(Rigidbody))]
+    public class Obstacle : MonoBehaviour
     {
-        public int rotSpeed;
+        [SerializeField]
+        Rigidbody rb;
+
+        public float rotSpeed;
         // Start is called before the first frame update
         void Start()
         {
@@ -16,19 +20,8 @@ namespace SnowGlobalConflict
         // Update is called once per frame
         void Update()
         {
-            Move(rotSpeed);
+            rb.angularVelocity += Vector3.up * Random.Range(2, 20) * Time.deltaTime * rotSpeed;
+            rb.velocity = Vector3.zero;
         }
-        public void Move(float moveSpeed)
-        {
-            transform.Rotate(Vector3.right * moveSpeed * Time.deltaTime);
-        }
-
-        public void ReadInputs()
-        {
-
-        }
-
-
     }
-
 }

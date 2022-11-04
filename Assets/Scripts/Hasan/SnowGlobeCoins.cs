@@ -10,7 +10,7 @@ namespace SnowGlobalConflict
     public class SnowGlobeCoins : Coins, IAudioManageable
     {
         public int coinCount;
-
+        
         [SerializeField]
         private AudioSource coinSource;
         public event IAudioManageable.OnMovement onMovement;

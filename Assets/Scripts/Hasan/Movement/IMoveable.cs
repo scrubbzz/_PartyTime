@@ -6,4 +6,5 @@ public interface IMoveable
 {
     public void ReadInputs();
     public void Move(float moveSpeed);
+    
 }
