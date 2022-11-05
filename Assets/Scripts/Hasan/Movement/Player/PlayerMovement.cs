@@ -10,24 +10,28 @@ namespace SnowGlobalConflict
     {
 
         [Header("Speed")]
-        public float moveSpeed;
+        public float currentMoveSpeed;
         public int speedLimit;
-        public float verticalSpeed;
-        public float horizontalSpeed;
+        private float verticalSpeed;
+        private float horizontalSpeed;
 
         public float increaseRate;
         public float decreaseRate;
 
-        public bool isMoving;
+        public float resetRate;
+        public float regularSpeed;
 
+        private bool isMoving;
+
+        public float delayTime;
         [Header("Direction")]
-        public Vector3 horizontalDirection;
-        public Vector3 verticalDirection;
-        public Rigidbody rb;
+        private Vector3 horizontalDirection;
+        private Vector3 verticalDirection;
+        private Rigidbody rb;
 
         [Header("Audio")]
-        [SerializeField]
-        private AudioSource movementSound;
+
+        public AudioSource movementSound;
 
         public event IAudioManageable.OnMovement onMovement;
 
@@ -35,22 +39,41 @@ namespace SnowGlobalConflict
         void Start()
         {
             rb = GetComponent<Rigidbody>();
+            currentMoveSpeed = 9;
             //horizontalDirection = new Vector3(moveSpeed, 0, 0);
             //verticalDirection = new Vector3(0, 0, moveSpeed);
             onMovement += PlaySoundEffect;
         }
-        
+
         // Update is called once per frame
         void Update()
         {
             ReadInputs();
-            Move(moveSpeed);
+            Move(currentMoveSpeed);
 
-            if (Input.GetKeyDown(KeyCode.P))
+            /* if (Input.GetKeyDown(KeyCode.P))
+             {
+                 onMovement(movementSound);
+             }*/
+            if (isMoving)
             {
+
+                /* float soundDelay = 0;
+                 soundDelay += Time.deltaTime;
+
+                 if (soundDelay > 2)
+                 {
+                     movementSound.Play();
+                     Debug.Log("You Suck " + movementSound.clip.name);
+                     soundDelay = 0;
+                 }*/
+
+
                 onMovement(movementSound);
+
+
             }
-           
+            ResetSpeed();
         }
         public void ReadInputs()
         {
@@ -100,22 +123,60 @@ namespace SnowGlobalConflict
         {
             horizontalDirection = new Vector3(horizontalSpeed, 0, 0);
             verticalDirection = new Vector3(0, 0, verticalSpeed);
-           /* if (rb.velocity.x < 50 && rb.velocity.z < 50)
-            {
+            /* if (rb.velocity.x < 30 && rb.velocity.z < 30)
+             {*/
 
-                rb.AddForce((horizontalDirection + verticalDirection) * moveSpeed);
-            }*/
-            rb.velocity = (horizontalDirection + verticalDirection) * moveSpeed;
+            rb.AddForce((horizontalDirection + verticalDirection) * moveSpeed);
+            //}
+            //rb.velocity = (horizontalDirection + verticalDirection) * moveSpeed;
 
         }
 
         public void PlaySoundEffect(AudioSource audioSource)
         {
-            audioSource.PlayOneShot(audioSource.clip);
-            //StartCoroutine(PlaySound(audioSource));
-           
-            Debug.Log("You Suck " + audioSource.clip.name);
-        }
+            delayTime += Time.deltaTime;
+            if (delayTime > audioSource.clip.length)
+            {
+                audioSource.PlayOneShot(audioSource.clip);
+                delayTime = 0;
+            }
 
+            //audioSource.PlayScheduled(audioSource.clip.length);
+            //StartCoroutine(PlaySound(audioSource));
+
+        }
+        public void ResetSpeed()
+        {
+            if (currentMoveSpeed > regularSpeed)
+            {
+                currentMoveSpeed -= Time.deltaTime * resetRate;
+
+            }
+        }
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "Pad")
+            {
+
+
+                currentMoveSpeed += regularSpeed;
+
+            }
+        }
+        /*private void OnCollisionStay(Collision collision)
+        {
+            if(collision.gameObject.tag == "Pad")
+            {
+                moveSpeed += 30;
+            }
+        }*/
+
+        /* private void OnCollisionExit(Collision collision)
+         {
+             if(collision.gameObject.tag == "Pad")
+             {
+                 moveSpeed -= 30;
+             }
+         }*/
     }
 }
