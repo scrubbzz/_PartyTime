@@ -19,7 +19,7 @@ namespace SnowGlobalConflict
         public float decreaseRate;
 
         public float resetRate;
-        public float regularSpeed;
+        public float regularMoveSpeed;
 
         private bool isMoving;
 
@@ -39,9 +39,11 @@ namespace SnowGlobalConflict
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            currentMoveSpeed = 9;
+            regularMoveSpeed = 9;
+            currentMoveSpeed = regularMoveSpeed;
             //horizontalDirection = new Vector3(moveSpeed, 0, 0);
             //verticalDirection = new Vector3(0, 0, moveSpeed);
+            movementSound = GetComponent<AudioSource>();
             onMovement += PlaySoundEffect;
         }
 
@@ -147,7 +149,7 @@ namespace SnowGlobalConflict
         }
         public void ResetSpeed()
         {
-            if (currentMoveSpeed > regularSpeed)
+            if (currentMoveSpeed > regularMoveSpeed)
             {
                 currentMoveSpeed -= Time.deltaTime * resetRate;
 
@@ -159,7 +161,7 @@ namespace SnowGlobalConflict
             {
 
 
-                currentMoveSpeed += regularSpeed;
+                currentMoveSpeed += regularMoveSpeed;
 
             }
         }

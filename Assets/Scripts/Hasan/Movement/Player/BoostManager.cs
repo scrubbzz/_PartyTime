@@ -4,23 +4,25 @@ using UnityEngine;
 
 namespace SnowGlobalConflict
 {
-    public class BoostManager : PlayerMovement
+    public class BoostManager : MonoBehaviour
     {
-        
+        public PlayerMovement playerMovement;
        
-      
-
+        private void Start()
+        {
+            playerMovement = GetComponent<PlayerMovement>();
+        }
         // Update is called once per frame
         void Update()
         {
-            if (currentMoveSpeed > regularSpeed)
+            if (playerMovement.currentMoveSpeed > playerMovement.regularMoveSpeed)
             {
-                movementSound.clip = Resources.Load<AudioClip>("SpeedBoostSound");
+                playerMovement.movementSound.clip = Resources.Load<AudioClip>("SFX/fling");
                
             }
             else
             {
-                movementSound.clip = Resources.Load<AudioClip>("RegularMovementSound");
+                playerMovement.movementSound.clip = Resources.Load<AudioClip>("SFX/RegularPlayerMovement");
             }
         }
         
