@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace FruitKahoot
 {
-    public class FallinFruits : MonoBehaviour
+    public class FallinBombs : MonoBehaviour
     {
         public float speed;
         public Sprite[] sprites;
         void Start()
         {
             Vector3 position = transform.position;
-            position.x = Random.Range(-11, 12);
-            speed = Random.Range(10, speed);
+            position.x = Random.Range(-9, 10);
+            speed = Random.Range(9, 20);
             transform.position = position;
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
@@ -25,9 +25,10 @@ namespace FruitKahoot
             position.y = position.y - speed * Time.deltaTime;
             transform.position = position;
 
-            Manager.Instance.CollectFruits(gameObject);
+            Manager.Instance.CollectBombs(gameObject);
 
         }
     }
-
 }
+
+

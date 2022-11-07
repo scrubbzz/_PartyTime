@@ -254,10 +254,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89b80dea4dc4a9c49abeea94db34de44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7469110181638976349, guid: f595104faabdd644e8e4cd39a98ac116, type: 3}
+  fruit: {fileID: 7469110181638976349, guid: f595104faabdd644e8e4cd39a98ac116, type: 3}
+  bomb: {fileID: 3816256090720294532, guid: 2b8e67cb1f1bf5a4e90196137c36079a, type: 3}
   playerTransform: {fileID: 1950521089}
-  delay: 1
-  collectDistance: 3
+  delay: 0.8
+  collectDistance: 2
   gameover: {fileID: 1551744705}
   scoreText: {fileID: 1248972813}
 --- !u!4 &242325371
@@ -524,7 +525,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score: 0'
+  m_text: 'Coins: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
