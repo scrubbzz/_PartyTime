@@ -113,6 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 90
+  audio: {fileID: 0}
+  coinValue: {fileID: 0}
 --- !u!54 &51838417275939207
 Rigidbody:
   m_ObjectHideFlags: 0
