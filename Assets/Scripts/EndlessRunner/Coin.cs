@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
     [SerializeField] float turnSpeed = 90f;
 
-    [SerializeField] AudioSource audio;
-    [SerializeField] GameObject coinValue;
+    AudioSource coinAudio;
 
     private void Awake()
     {
-        audio = GetComponent<AudioSource>();
+        coinAudio = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -19,11 +16,7 @@ public class Coin : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        //coinValue.SetActive(true);
-        //gameObject.transform.DetachChildren();
-        
-
-        //Instantiate(coinValue);
+        if (other.gameObject.name == "Player") { coinAudio.Play(); }
 
         if (other.gameObject.GetComponent<Obstacle>() != null)
         {
@@ -36,13 +29,9 @@ public class Coin : MonoBehaviour
             return;
         }
 
-        
-
         GameManager.inst.IncrementScore();
 
-        Destroy(gameObject);
-
-        audio.Play();
-        audio.pitch = Random.Range(0.9f, 1f);
+        Destroy(gameObject,.11f);
     }
+
 }

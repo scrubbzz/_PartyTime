@@ -10,13 +10,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed = 5;
     [SerializeField] Rigidbody rb;
 
-    public string playerControls;
-    public KeyCode jump;
     float horizontalInput;
     public float horizontalMultiplier = 2;
 
     [SerializeField] float jumpForce = 300f;
     public LayerMask groundMask;
+
+    [SerializeField] string playerInput;
+    [SerializeField] KeyCode jump;
 
 
     private void FixedUpdate()
@@ -25,12 +26,12 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
         Vector3 horizontalMove = transform.right * horizontalInput * speed * Time.fixedDeltaTime * horizontalMultiplier;
-        rb.MovePosition(rb.position + forwardMove + horizontalMove);
+        rb.MovePosition(rb.position + forwardMove + horizontalMove); 
     }
 
     void Update()
     {
-        horizontalInput = Input.GetAxis(playerControls);
+        horizontalInput = Input.GetAxis(playerInput);
 
         if (Input.GetKeyDown(jump))
         {
