@@ -98,9 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34d8093c542da2b4582593ae6b2d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3.19
+  moveSpeed: 4.18
   damageTotalRequired: 30
-  damageAllowance: 10
+  damageAllowance: 20
   valueInCoins: 3
   successBreakSound: {fileID: 8300000, guid: 18856c57c21454e41aa298c625a588f3, type: 3}
   failBreakSound: {fileID: 8300000, guid: 836728e275357564aa4439d489fec3c2, type: 3}

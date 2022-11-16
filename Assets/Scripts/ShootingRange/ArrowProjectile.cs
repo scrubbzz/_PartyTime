@@ -2,74 +2,102 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class ArrowProjectile : MonoBehaviour
+
+namespace StraightShootin
 {
-    Rigidbody body;
-    AudioSource audioSource;
-    [HideInInspector] public PlayerAim player;
+    /// <summary>
+    /// Attached to the Arrow prefab object, and is active when a player instantiates it. Controls the aiming and firing
+    /// of the arrow, given the variables passed in by said player.
+    /// </summary>
 
-    public float arrowSpeedMultiplier = 50f;
-    public float launchArcDegree = 25f;
-
-    public Vector3 defaultArrowPos;
-    public Quaternion defaultArrowRot;
-
-    public LayerMask targetLayer = 6;
-    bool hasHitTarget;
-
-
-    void OnEnable()
+    [RequireComponent(typeof(Rigidbody))]
+    public class ArrowProjectile : MonoBehaviour
     {
-        body = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
+        Rigidbody body;
+        AudioSource audioSource;
+        TrailRenderer trailRenderer;
 
-        ResetState();
-    }
+        [HideInInspector] public PlayerAim player;
 
-    public void ResetState()
-    {
-        // deactivate physics, stop the arrow
-        body.useGravity = false;
-        body.isKinematic = true;
-        body.velocity = Vector3.zero; 
+        public float arrowSpeedMultiplier = 50f;
+        public float launchArcDegree = 25f;
 
-        transform.position = defaultArrowPos; // reset the arrow's transform
-        transform.rotation = defaultArrowRot;
+        public LayerMask targetLayer = 6;
+        bool hasHitTarget;
 
-        hasHitTarget = false;
-    }
 
-    public void Aim(Vector3 aimTo)
-    {
-        // change direction
-        transform.LookAt(aimTo);
-    }
-
-    public void Fire(float powerToFlingWith)
-    {
-        // activate physics
-        body.useGravity = true;
-        body.isKinematic = false;
-
-        // rotate upwards for a firing arc, throw in current direction
-        transform.Rotate(Vector3.left, launchArcDegree);
-        body.AddForce(transform.forward * powerToFlingWith * arrowSpeedMultiplier);
-
-        audioSource.Play();
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        // check if the collision obj is a target
-        if (collision.gameObject.layer == targetLayer && !hasHitTarget)
+        void OnEnable()
         {
-            ShooterTarget target = collision.gameObject.GetComponent<ShooterTarget>();
+            body = GetComponent<Rigidbody>();
+            audioSource = GetComponent<AudioSource>();
+            trailRenderer = GetComponent<TrailRenderer>();
 
-            player.CheckTargetDamage(target); // pass target info to player
+            /*if (player == null)
+            {
+                Debug.LogError("Arrow has no player reference. Make sure the object is being instantiated by a player.");
+                Destroy(gameObject);
+            }*/
 
-            hasHitTarget = true; // make sure we don't accidentally break other targets
         }
+
+
+
+        // called when player's reset timer completes, or player begins input
+        public void ResetState(PassablePlayerAimData player)
+        {
+            // deactivate physics, stop the arrow
+            body.useGravity = false;
+            body.isKinematic = true;
+            body.velocity = Vector3.zero;
+
+            transform.position = player.defaultArrowPos;
+            transform.rotation = player.defaultArrowRot;
+
+            trailRenderer.enabled = false;
+
+            hasHitTarget = false;
+        }
+
+        // called while the player holds the input down
+        public void Aim(PassablePlayerAimData player)
+        {
+            transform.LookAt(player.hit.point);
+            // note: add charging sound effect.
+        }
+
+        // called when player releases input
+        public void Fire(PassablePlayerAimData player)
+        {
+            // activate physics
+            body.useGravity = true;
+            body.isKinematic = false;
+
+            // rotate upwards for a firing arc, throw in current direction
+            transform.Rotate(Vector3.left, launchArcDegree);
+            Vector3 forwardForce = transform.forward * player.chargeValue * arrowSpeedMultiplier;
+            body.AddForce(forwardForce);
+
+            trailRenderer.enabled = true;
+            //trailRenderer.time = forwardForce.z / 50;
+
+            audioSource.pitch = Random.Range(0.8f, 1.2f);
+            audioSource.Play();
+        }
+
+
+
+        void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.layer == targetLayer && !hasHitTarget)
+            {
+                // pass the target's info over to player
+                ShooterTarget target = collision.gameObject.GetComponent<ShooterTarget>();
+                player.CheckTargetDamage(target);
+
+                hasHitTarget = true; // make sure we don't accidentally break other targets
+            }
+        }
+
     }
 
 }
