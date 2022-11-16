@@ -23,7 +23,7 @@ namespace SnowGlobalConflict
 
         private bool isMoving;
 
-        public float delayTime;
+        private float delayTime;
         [Header("Direction")]
         private Vector3 horizontalDirection;
         private Vector3 verticalDirection;
@@ -43,9 +43,9 @@ namespace SnowGlobalConflict
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            regularMoveSpeed = 9;
+            regularMoveSpeed = 3;
             currentMoveSpeed = regularMoveSpeed;
-            
+
             movementSound = GetComponent<AudioSource>();
             onMovement += PlaySoundEffect;
         }
@@ -110,7 +110,12 @@ namespace SnowGlobalConflict
         {
             horizontalDirection = new Vector3(horizontalSpeed, 0, 0);
             verticalDirection = new Vector3(0, 0, verticalSpeed);
-            
+
+            /* if (isMoving)
+             {
+                 transform.forward = horizontalDirection + verticalDirection; 
+             }
+             */
             rb.AddForce((horizontalDirection + verticalDirection) * moveSpeed);
         }
 
@@ -135,7 +140,10 @@ namespace SnowGlobalConflict
         {
             if (collision.gameObject.tag == "Pad")
             {
-                currentMoveSpeed += regularMoveSpeed;
+                if (currentMoveSpeed < speedLimit)
+                {
+                    currentMoveSpeed += /*regularMoveSpeed*/ 9;
+                }
             }
         }
     }

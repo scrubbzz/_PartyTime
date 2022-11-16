@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SnowGlobalConflict
 {
@@ -8,16 +9,21 @@ namespace SnowGlobalConflict
     {
         public Transform target;
         public Vector3 offset;
+
+        public string playerName;
         // Start is called before the first frame update
         void Start()
         {
-            target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+            //target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+            target = GameObject.Find(playerName).GetComponent<Transform>();
         }
 
         // Update is called once per frame
         void Update()
         {
             FollowPlayer();
+            transform.rotation = Quaternion.identity;
+           
         }
         public void FollowPlayer()
         {

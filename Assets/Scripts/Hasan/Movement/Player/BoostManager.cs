@@ -7,11 +7,12 @@ namespace SnowGlobalConflict
     public class BoostManager : MonoBehaviour
     {
         public PlayerMovement playerMovement;
-        public GameObject boostTrail;
+        public TrailRenderer boostTrail;
         private void Start()
         {
             playerMovement = GetComponent<PlayerMovement>();
-            boostTrail = GameObject.Find("boost trail");
+            //boostTrail = GameObject.Find("boost trail");
+            boostTrail = GetComponentInChildren<TrailRenderer>();
         }
         // Update is called once per frame
         void Update()
@@ -21,7 +22,8 @@ namespace SnowGlobalConflict
                 playerMovement.movementSound.clip = Resources.Load<AudioClip>("SFX/fling");
                 if (boostTrail != null)
                 {
-                    boostTrail.SetActive(true);
+                    //boostTrail.SetActive(true);
+                    boostTrail.enabled = true;
                 }
 
 
@@ -33,7 +35,7 @@ namespace SnowGlobalConflict
                 if (boostTrail != null)
                 {
 
-                    boostTrail.SetActive(false);
+                    boostTrail.enabled = false;
                 }
 
             }

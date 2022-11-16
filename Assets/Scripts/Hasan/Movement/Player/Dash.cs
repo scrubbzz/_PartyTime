@@ -25,7 +25,11 @@ public class Dash : MonoBehaviour, IMoveable
     }
     public void Move(float moveSpeed)
     {
-        rb.position = Vector3.MoveTowards(rb.position, rb.position + new Vector3(-moveSpeed * 10, 0, 0), dashSpeed);
+        if(rb.velocity != Vector3.zero)
+        {
+            transform.forward = rb.velocity;
+        }
+        rb.position = Vector3.MoveTowards(rb.position, rb.position + new Vector3(0, 0, -moveSpeed * 10), dashSpeed);
         rb.velocity = Vector3.zero;
     }
 
