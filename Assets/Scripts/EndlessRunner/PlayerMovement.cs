@@ -9,16 +9,16 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] float speed = 5;
     [SerializeField] Rigidbody rb;
-    //[SerializeField] Rigidbody rb2;
 
     float horizontalInput;
-    //float horizontalInput2p;
     public float horizontalMultiplier = 2;
 
     [SerializeField] float jumpForce = 300f;
     public LayerMask groundMask;
 
-    //[SerializeField] bool isSecondPlayer;
+    [SerializeField] string playerInput;
+    [SerializeField] KeyCode jump;
+
 
     private void FixedUpdate()
     {
@@ -26,22 +26,14 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
         Vector3 horizontalMove = transform.right * horizontalInput * speed * Time.fixedDeltaTime * horizontalMultiplier;
-        //Vector3 horizontalMove2 = transform.right * horizontalInput2p * speed * Time.fixedDeltaTime * horizontalMultiplier;
-        rb.MovePosition(rb.position + forwardMove + horizontalMove);
-        //rb2.MovePosition(rb2.position + forwardMove + horizontalMove2);
+        rb.MovePosition(rb.position + forwardMove + horizontalMove); 
     }
 
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        //horizontalInput2p = Input.GetAxis("Horizontal2");
+        horizontalInput = Input.GetAxis(playerInput);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
-
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(jump))
         {
             Jump();
         }
