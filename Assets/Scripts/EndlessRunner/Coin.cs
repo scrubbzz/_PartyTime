@@ -16,7 +16,7 @@ public class Coin : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Player") { coinAudio.Play(); }
+        if (other.gameObject.name == "Player" || other.gameObject.name == "Player2") { coinAudio.Play(); }
 
         if (other.gameObject.GetComponent<Obstacle>() != null)
         {
@@ -24,7 +24,7 @@ public class Coin : MonoBehaviour
             return;
         }
 
-        if (other.gameObject.name != "Player")
+        if (other.gameObject.name != "Player" || other.gameObject.name != "Player2")
         {
             return;
         }

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public bool isPaused = false;
+    public bool isPaused = true;
 
     [SerializeField] GameObject pauseMenuUI;
 
+    private void Start()
+    {
+        Time.timeScale = 0;
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

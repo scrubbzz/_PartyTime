@@ -18,6 +18,10 @@ namespace Menus
         public GameObject boxerButton;
         public GameObject broccoliButton;   
         public GameObject puncherButton;
+        public GameObject dealButton;
+        public GameObject sold1;
+        public GameObject sold2;
+        public GameObject sold3;
 
         public GameObject inSuffFunds;
 
@@ -27,8 +31,9 @@ namespace Menus
             {
                 hasBoxer = true;
                 starAmount = starAmount - 800;
-                starText.text = "Super Stars : " + starAmount;
+                starText.text = "Party Dollars : " + starAmount;
                 boxerButton.SetActive(false);
+                sold1.SetActive(true);
 
             }
             else { inSuffFunds.SetActive(true); }
@@ -40,8 +45,9 @@ namespace Menus
             {
                 hasPuncher = true;
                 starAmount = starAmount - 1200;
-                starText.text = "Super Stars : " + starAmount;
+                starText.text = "Party Dollars : " + starAmount;
                 puncherButton.SetActive(false);
+                sold2.SetActive(true);
             }
             else { inSuffFunds.SetActive(true); }
         }
@@ -52,8 +58,9 @@ namespace Menus
             {
                 hasBroccoli = true;
                 starAmount = starAmount - 1200;
-                starText.text = "Super Stars : " + starAmount;
+                starText.text = "Party Dollars : " + starAmount;
                 broccoliButton.SetActive(false);
+                sold3.SetActive(true);
             }
             else { inSuffFunds.SetActive(true); }
         }
@@ -61,25 +68,25 @@ namespace Menus
         public void IncrementStarsBy1000()
         {
             starAmount = starAmount + 1000;
-            starText.text = "Super Stars : " + starAmount;
+            starText.text = "Party Dollars : " + starAmount;
         }
 
         public void IncrementStarsBy2800()
         {
             starAmount = starAmount + 2800;
-            starText.text = "Super Stars : " + starAmount;
+            starText.text = "Party Dollars : " + starAmount;
         }
 
         public void IncrementStarsBy5000()
         {
             starAmount = starAmount + 5000;
-            starText.text = "Super Stars : " + starAmount;
+            starText.text = "Party Dollars : " + starAmount;
         }
 
         public void IncrementStarsBy13500()
         {
             starAmount = starAmount + 13500;
-            starText.text = "Super Stars : " + starAmount;
+            starText.text = "Party Dollars : " + starAmount;
         }
 
     }
