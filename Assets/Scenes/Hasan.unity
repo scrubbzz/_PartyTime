@@ -2967,8 +2967,8 @@ MonoBehaviour:
   resetRate: 2
   regularMoveSpeed: 3
   movementSound: {fileID: 1230747862}
-  horizontalName: Horizontal
-  verticalName: Vertical
+  horizontalName: HasanHorizontal1
+  verticalName: HasanVertical1
 --- !u!54 &1230747861
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4637,8 +4637,8 @@ MonoBehaviour:
   resetRate: 2
   regularMoveSpeed: 3
   movementSound: {fileID: 1851545997}
-  horizontalName: Horizontal 2
-  verticalName: Vertical 2
+  horizontalName: HasanHorizontal2
+  verticalName: HasanVertical2
 --- !u!54 &1851546000
 Rigidbody:
   m_ObjectHideFlags: 0
