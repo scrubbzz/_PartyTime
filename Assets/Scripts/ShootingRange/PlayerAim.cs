@@ -4,204 +4,181 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-
-namespace StraightShootin
+public class PlayerAim : MonoBehaviour
 {
+    // input reading values
+    public string horizontalInput = "Mouse X";
+    public string verticalInput = "Mouse Y";
+    public float inputSensitivity = 5f;
+    float xInput = 0f;
+    float yInput = 0f;
 
-    // object that stores all variables the player class uses that are explicitly shared to other classes.
-    // passed to other classes through functions 
-    #region Player Data Class
-    [System.Serializable]
-    public class PassablePlayerAimData
+    // charging related values
+    float chargeValue = 0f;
+    public float chargeSpeed = 2f;
+    public float chargeLimit = 50f;
+
+    // arrow data
+    public GameObject arrowPrefab;
+    ArrowProjectile arrow;
+
+    public float arrowResetTimer = 4.5f;
+    float previousResetTime;
+    bool resetTimerIsActive = false;
+
+
+    RaycastHit hit;
+
+    int coinCounter;
+
+    public Image cursorImage;
+
+    public Slider chargeBar;
+    public TextMeshProUGUI testTextForCoinCounter;
+
+
+    private void Awake()
     {
+        chargeBar.minValue = 0;
+        chargeBar.maxValue = chargeLimit;
 
-        // input reading values
-        public string horizontalInput;
-        public string verticalInput;
-        public KeyCode aimAndFireKey;
+        GameObject arrowObj = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+        arrow = arrowObj.GetComponent<ArrowProjectile>();
 
-        public float inputSensitivity = 20f;
-        public float chargeValue { get; set; }
+        if (arrow == null)
+            arrow = arrowObj.AddComponent<ArrowProjectile>(); // make sure we've got a rigidbody on the arrow
 
+        arrow.player = this;
 
-        public Vector3 defaultArrowPos;
-        public Quaternion defaultArrowRot;
-
-
-        public RaycastHit hit;
-
-
-        public PassablePlayerAimData()
-        {
-            hit = new RaycastHit();
-        }
-
+        previousResetTime = arrowResetTimer;
     }
-    # endregion 
 
-
-    /// <summary>
-    /// Handles player input, and sending commands to the arrow that it generates. 
-    /// </summary>
-    /// TODO: Move variables and input checking to their own smaller classes
-    public class PlayerAim : MonoBehaviour
+    private void Start()
     {
-        [SerializeField] PassablePlayerAimData playerData;
+        hit = new RaycastHit();
 
-        // charging related values
-        [SerializeField] float chargeSpeed = 2f;
-        [SerializeField] float chargeLimit = 50f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
+        xInput = Screen.width / 2;
+        yInput = Screen.height / 2;
+    }
 
-        // arrow data
-        [SerializeField] GameObject arrowPrefab;
-        ArrowProjectile arrow;
-
-
-        float xInput = 0f;
-        float yInput = 0f;
-
-
-        public float arrowResetTimer = 4.5f;
-        float previousResetTime;
-        bool resetTimerIsActive = false;
+    void Update()
+    {
+        xInput += Input.GetAxis(horizontalInput) * inputSensitivity;
+        yInput += Input.GetAxis(verticalInput) * inputSensitivity;
 
 
-        public int coinCounter;
+        cursorImage.rectTransform.position = new Vector3(xInput, yInput);
 
-        public Image crosshairImage;
-        //public RectTransform crosshair;
-
-        public Slider chargeBar;
-        public TextMeshProUGUI testTextForCoinCounter;
+        chargeBar.value = chargeValue;
+        testTextForCoinCounter.text = "" + coinCounter;
 
 
-        private void Start()
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //playerData = new PassablePlayerAimData();
+            Cursor.lockState = CursorLockMode.None;
+        }
 
-            chargeBar.minValue = 0;
-            chargeBar.maxValue = chargeLimit;
-
-            xInput = Screen.width / 2;
-            yInput = Screen.height / 2;
-
-            Cursor.visible = false;
+        // reset arrow, timer and charge
+        if (Input.GetMouseButtonDown(0))
+        {
             Cursor.lockState = CursorLockMode.Locked;
-
-            if (playerData.defaultArrowPos == Vector3.zero)
-                playerData.defaultArrowPos = this.transform.position + (Vector3.up * 2f);
-
-
-
-            GameObject arrowObj = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-            arrow = arrowObj.GetComponent<ArrowProjectile>();
-
-            if (arrow == null)
-                arrow = arrowObj.AddComponent<ArrowProjectile>(); // make sure we've got a rigidbody on the arrow
-
-            arrow.player = this;
-            arrow.ResetState(playerData);
-
-            previousResetTime = arrowResetTimer;
+            ResetArrow();
         }
 
-
-        void Update()
+        // increase charge, rotate arrow to raycast point
+        if (Input.GetMouseButton(0))
         {
-            xInput += Input.GetAxis(playerData.horizontalInput) * playerData.inputSensitivity;
-            yInput += Input.GetAxis(playerData.verticalInput) * playerData.inputSensitivity;
-            xInput = Mathf.Clamp(xInput, 0, Screen.width);
-            yInput = Mathf.Clamp(yInput, 0, Screen.height);
+            chargeValue = Mathf.MoveTowards(chargeValue, chargeLimit, chargeSpeed * Time.deltaTime);
+            chargeValue = Mathf.Clamp(chargeValue, 0, chargeLimit);
 
-
-            crosshairImage.rectTransform.position = new Vector3(xInput, yInput);
-
-            chargeBar.value = playerData.chargeValue;
-            testTextForCoinCounter.text = "" + coinCounter;
-
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-
-            // check input each frame 
-            // charge while holding, then fire on release
-
-            if (Input.GetKeyDown(playerData.aimAndFireKey))
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                ResetArrow();
-            }
-
-            if (Input.GetKey(playerData.aimAndFireKey))
-            {
-                CalculateCharge();
-
-                Ray aim = Camera.main.ScreenPointToRay(crosshairImage.transform.position);
-                Physics.Raycast(aim, out playerData.hit, 50);
-                arrow.Aim(playerData);
-            }
-
-            if (Input.GetKeyUp(playerData.aimAndFireKey))
-            {
-                arrow.Fire(playerData);
-
-                resetTimerIsActive = true;
-                StartCoroutine(CountdownToArrowReset());
-            }
-
+            Ray aim = Camera.main.ScreenPointToRay(cursorImage.transform.position);
+            Physics.Raycast(aim, out hit, 50);
+            arrow.Aim(hit.point);
 
         }
 
-
-
-        public void CheckTargetDamage(ShooterTarget target)
+        // launch arrow, activate reset timer
+        if (Input.GetMouseButtonUp(0))
         {
-            coinCounter += target.CalculateDamageTaken(playerData.chargeValue, this); // add coins if target broke successfully
-        }
 
+            //Ray aim = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //Physics.Raycast(aim, out hit, 50); // set the hit variable via raycasting
+            arrow.Fire(chargeValue);
 
-        void CalculateCharge()
-        {
-            playerData.chargeValue = Mathf.MoveTowards(playerData.chargeValue, chargeLimit, chargeSpeed * Time.deltaTime);
-            playerData.chargeValue = Mathf.Clamp(playerData.chargeValue, 0, chargeLimit);
-        }
-
-
-        void ResetArrow()
-        {
-            arrow.ResetState(playerData);
-
-            arrowResetTimer = previousResetTime;
-            resetTimerIsActive = false;
-
-            playerData.chargeValue = 0;
-
-        }
-
-        IEnumerator CountdownToArrowReset()
-        {
-            if (!resetTimerIsActive)
-            {
-                arrowResetTimer = previousResetTime;
-                yield break;
-            }
-
-            arrowResetTimer -= 2 * Time.deltaTime;
-
-            if (arrowResetTimer <= 0)
-            {
-                ResetArrow();
-                yield break;
-            }
-
-            yield return null;
+            resetTimerIsActive = true;
             StartCoroutine(CountdownToArrowReset());
 
         }
 
+        // if collided with something on the target layer
+        /*if (Physics.CheckBox(arrow.transform.position, new Vector3(.5f, .5f, .5f), arrow.transform.rotation, targetLayer) && !hasHitTarget)
+        {
+
+            ShooterTarget target = hit.collider.gameObject.GetComponent<ShooterTarget>();
+
+            coinCounter += target.CalculateDamageTaken(chargeValue, this); // add coins if target broke successfully
+
+            //chargeValue = 0;
+
+            hasHitTarget = true;
+            hit = new RaycastHit();
+        }*/
 
     }
+
+    public void CheckTargetDamage(ShooterTarget target)
+    { 
+        coinCounter += target.CalculateDamageTaken(chargeValue, this); // add coins if target broke successfully
+    }
+
+    void ResetArrow()
+    {
+        arrow.ResetState();
+
+        arrowResetTimer = previousResetTime; // reset timer and charge
+        resetTimerIsActive = false;
+
+        chargeValue = 0;
+
+    }
+
+    IEnumerator CountdownToArrowReset()
+    {
+        if (!resetTimerIsActive)
+        {
+            arrowResetTimer = previousResetTime;
+            yield break;
+        }
+
+        arrowResetTimer -= 2 * Time.deltaTime;
+
+        if (arrowResetTimer <= 0)
+        {
+            ResetArrow();
+            yield break;
+        }
+
+        yield return null;
+        StartCoroutine(CountdownToArrowReset());
+
+    }
+
+
+    /*void InstantiateArrow(Ray aim, RaycastHit hit)
+    {
+        GameObject arrowInstance = Instantiate(arrowObj, aim.origin, Quaternion.identity);
+        arrowInstance.transform.LookAt(hit.collider.transform.position);
+
+        Rigidbody arrowRB = arrowInstance.GetComponent<Rigidbody>();
+        if (arrowRB == null)
+        {
+            arrowRB = arrowInstance.AddComponent<Rigidbody>();
+        }
+
+        arrowRB.velocity *= chargeValue * arrowSpeedMultiplier;
+    }*/
+
 }
