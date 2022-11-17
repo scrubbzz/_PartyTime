@@ -11,7 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 449ac8cce4ed60a4aa64b403bc2fa350
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Shamma.unity
     guid: a848bf06058b3a544a4456e7520266d1
+  - enabled: 1
+    path: Assets/Scenes/Hasan.unity
+    guid: fb8045fd525375d48bf220d09fda6db9
+  - enabled: 1
+    path: Assets/Scenes/EndlessRunner.unity
+    guid: 36440fd4d51dde9429401a3d07b1cf7c
+  - enabled: 1
+    path: Assets/Scenes/Saeed.unity
+    guid: 25de5bd6ab8f9954c857f1f1f53440ad
   m_configObjects: {}

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43762082, g: 0.4854809, b: 0.56575763, a: 1}
+  m_IndirectSpecularColor: {r: 0.44144836, g: 0.49028772, b: 0.570318, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -650,8 +650,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
+  m_sharedMaterial: {fileID: 5312148855566607506, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -999,7 +999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1025731112
 Transform:
   m_ObjectHideFlags: 0
@@ -2210,14 +2210,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894392437}
-  m_LocalRotation: {x: 0.6157042, y: -0.19942349, z: 0.16497742, w: 0.7442587}
+  m_LocalRotation: {x: 0.5091264, y: -0.17521787, z: 0.19048874, w: 0.8208551}
   m_LocalPosition: {x: -1.52, y: -2.04, z: 2.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 79.2, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 64.501, y: -12.57, z: 18.179}
 --- !u!114 &1894392440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2471,8 +2471,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
+  m_sharedMaterial: {fileID: 5312148855566607506, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

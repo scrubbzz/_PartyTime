@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 1e86e2302588303419442ca7a2427b11, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 02734e581e7ff584eac41251a8a9ea09, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -522,7 +522,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Shamma
+          m_StringArgument: Hasan
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &57795479
@@ -3283,11 +3283,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 1096ce13a529e864da22d060ea05302a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.199
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -11243,6 +11243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e7a2f150130f249bceb2d502738c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shop: {fileID: 1103926046}
   dealButton: {fileID: 1338826937}
 --- !u!1 &2029601135
 GameObject:

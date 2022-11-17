@@ -57,8 +57,8 @@ public class PlayerAim : MonoBehaviour
     {
         hit = new RaycastHit();
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         xInput = Screen.width / 2;
         yInput = Screen.height / 2;

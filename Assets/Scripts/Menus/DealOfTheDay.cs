@@ -7,9 +7,9 @@ namespace Menus
 {
     public class DealOfTheDay : MonoBehaviour
     {
-        Shop shop;
+        public Shop shop;
         public GameObject dealButton;
-        void Start()
+        void Update()
         {
             if(shop.hasBoxer == true) { dealButton.SetActive(false); }
         }
