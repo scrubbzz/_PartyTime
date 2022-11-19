@@ -32,6 +32,7 @@ namespace SnowGlobalConflict
         {
             gameTimer = gameTimerLength;
             gameTimer -= Time.deltaTime;
+            Debug.Log("The time is " + gameTimerLength);
             //gameTimer = Mathf.RoundToInt(gameTimer);
 
             if(gameTimer <= 0)

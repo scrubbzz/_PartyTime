@@ -66,6 +66,7 @@ namespace SnowGlobalConflict
         {
             if (Input.GetAxis(horizontalName) != 0 && horizontalSpeed < speedLimit)
             {
+                Debug.Log("You moving");
                 isMoving = true;
                 //horizontalSpeed += Time.deltaTime * increaseRate;
                 horizontalSpeed = Input.GetAxis(horizontalName) * increaseRate;
