@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5b423151baccc7049ad15f2b21c0f094, type: 2}
+  - {fileID: 2100000, guid: 6c176749b1718ae45940bff5e08c5166, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,9 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34d8093c542da2b4582593ae6b2d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.9
+  moveSpeed: 3.42
   damageTotalRequired: 40
-  damageAllowance: 15
+  damageAllowance: 25.13
   valueInCoins: 1
   successBreakSound: {fileID: 8300000, guid: 18856c57c21454e41aa298c625a588f3, type: 3}
   failBreakSound: {fileID: 8300000, guid: 836728e275357564aa4439d489fec3c2, type: 3}
