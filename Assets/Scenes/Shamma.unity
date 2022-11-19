@@ -257,8 +257,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
+  m_sharedMaterial: {fileID: 5312148855566607506, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1026,10 +1026,10 @@ MonoBehaviour:
     horizontalInput: Mouse X
     verticalInput: Mouse Y
     aimAndFireKey: 32
-    inputSensitivity: 20
+    inputSensitivity: 25
     defaultArrowPos: {x: 0, y: 0, z: 0}
     defaultArrowRot: {x: 0, y: 0, z: 0, w: 0}
-  chargeSpeed: 25.88
+  chargeSpeed: 27.15
   chargeLimit: 50
   arrowPrefab: {fileID: 3800875947852073707, guid: 841986e083889564690933bec9367982, type: 3}
   arrowResetTimer: 3.4
@@ -1071,7 +1071,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0080a2ded69577d4f806263f67ef0aa0, type: 2}
+  - {fileID: 2100000, guid: c3180148478af5a4684728167b179a51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1349,8 +1349,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
+  m_sharedMaterial: {fileID: 5312148855566607506, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1484,8 +1484,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
+  m_sharedMaterial: {fileID: 5312148855566607506, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1931,7 +1931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &696061359
 Transform:
   m_ObjectHideFlags: 0
@@ -1963,10 +1963,10 @@ MonoBehaviour:
     horizontalInput: Horizontal2
     verticalInput: Vertical2
     aimAndFireKey: 109
-    inputSensitivity: 15
+    inputSensitivity: 20
     defaultArrowPos: {x: 0, y: 0, z: 0}
     defaultArrowRot: {x: 0, y: 0, z: 0, w: 0}
-  chargeSpeed: 25.88
+  chargeSpeed: 27.15
   chargeLimit: 50
   arrowPrefab: {fileID: 3800875947852073707, guid: 841986e083889564690933bec9367982, type: 3}
   arrowResetTimer: 3.4
@@ -2008,7 +2008,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0080a2ded69577d4f806263f67ef0aa0, type: 2}
+  - {fileID: 2100000, guid: c3180148478af5a4684728167b179a51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2096,7 +2096,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &753146479
 Transform:
   m_ObjectHideFlags: 0
@@ -2125,13 +2125,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData:
-    horizontalInput: Mouse X
-    verticalInput: Mouse Y
-    aimAndFireKey: 32
+    horizontalInput: Horizontal3
+    verticalInput: Vertical3
+    aimAndFireKey: 47
     inputSensitivity: 20
     defaultArrowPos: {x: 0, y: 0, z: 0}
     defaultArrowRot: {x: 0, y: 0, z: 0, w: 0}
-  chargeSpeed: 25.88
+  chargeSpeed: 27.15
   chargeLimit: 50
   arrowPrefab: {fileID: 3800875947852073707, guid: 841986e083889564690933bec9367982, type: 3}
   arrowResetTimer: 3.4
@@ -2173,7 +2173,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0080a2ded69577d4f806263f67ef0aa0, type: 2}
+  - {fileID: 2100000, guid: c3180148478af5a4684728167b179a51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2310,6 +2310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawningIsActive: 1
   spawnDistanceOnZ: 10.5
+  spawnDistanceFudging: 2.5
   minPossibleSpawnTime: 0.47
   maxPossibleSpawnTime: 2.37
   gameLength: 60
@@ -2467,8 +2468,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
+  m_sharedMaterial: {fileID: 5312148855566607506, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3850,7 +3851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1889090671
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3885,7 +3886,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0080a2ded69577d4f806263f67ef0aa0, type: 2}
+  - {fileID: 2100000, guid: c3180148478af5a4684728167b179a51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3943,13 +3944,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData:
-    horizontalInput: Horizontal1
-    verticalInput: Vertical1
+    horizontalInput: Horizontal
+    verticalInput: Vertical
     aimAndFireKey: 118
-    inputSensitivity: 15
+    inputSensitivity: 20
     defaultArrowPos: {x: 0, y: 0, z: 0}
     defaultArrowRot: {x: 0, y: 0, z: 0, w: 0}
-  chargeSpeed: 25.88
+  chargeSpeed: 27.15
   chargeLimit: 50
   arrowPrefab: {fileID: 3800875947852073707, guid: 841986e083889564690933bec9367982, type: 3}
   arrowResetTimer: 3.4
@@ -4599,8 +4600,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
+  m_sharedMaterial: {fileID: 5312148855566607506, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

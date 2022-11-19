@@ -14,15 +14,16 @@ namespace StraightShootin
 
         public bool spawningIsActive;
 
-        public float spawnDistanceOnZ = 5;
+        public float spawnDistanceOnZ = 5f;
+        public float spawnDistanceFudging = 2.5f;
 
-        public float minPossibleSpawnTime = 5;
-        public float maxPossibleSpawnTime = 5;
-        float approximateSpawnTime = 5;
+        public float minPossibleSpawnTime = 5f;
+        public float maxPossibleSpawnTime = 5f;
+        float approximateSpawnTime = 5f;
         float spawnCountdown;
 
-        public float gameLength = 60;
-        float originalGameLength = 60;
+        public float gameLength = 60f;
+        float originalGameLength = 60f;
 
         public List<GameObject> spawnableTargets = new List<GameObject>();
         List<GameObject> inSceneTargets = new List<GameObject>();
@@ -100,7 +101,7 @@ namespace StraightShootin
             float targetPosOnY = Mathf.Clamp(Random.value, 0.25f, 0.75f); // clamp these so targets don't spawn offscreen
 
             // convert values to the normalised viewport space (0 = leftmost, 1 = rightmost)
-            float spawnDist = Random.Range(spawnDistanceOnZ - 4, spawnDistanceOnZ + 4);
+            float spawnDist = Random.Range(spawnDistanceOnZ - spawnDistanceFudging, spawnDistanceOnZ + spawnDistanceFudging);
             Vector3 offscreenPosition = Camera.main.ViewportToWorldPoint(new Vector3(targetPosOnX, targetPosOnY, spawnDist));
 
             GameObject generatedTarget = Instantiate(spawnableTargets[randomTargetType],
