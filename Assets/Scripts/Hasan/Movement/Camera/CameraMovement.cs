@@ -7,10 +7,12 @@ namespace SnowGlobalConflict
 {
     public class CameraMovement : MonoBehaviour
     {
+        
         public Transform target;
         public Vector3 offset;
 
         public string playerName;
+        public Quaternion rotation;
         // Start is called before the first frame update
         void Start()
         {
@@ -22,8 +24,8 @@ namespace SnowGlobalConflict
         void Update()
         {
             FollowPlayer();
-            transform.rotation = Quaternion.identity;
-           
+            //transform.rotation = Quaternion.identity;
+            transform.rotation = rotation;
         }
         public void FollowPlayer()
         {

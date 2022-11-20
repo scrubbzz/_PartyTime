@@ -43,7 +43,7 @@ namespace SnowGlobalConflict
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            regularMoveSpeed = 3;
+            //regularMoveSpeed = 3;
             currentMoveSpeed = regularMoveSpeed;
 
             movementSound = GetComponent<AudioSource>();
@@ -141,9 +141,9 @@ namespace SnowGlobalConflict
         {
             if (collision.gameObject.tag == "Pad")
             {
-                if (currentMoveSpeed < speedLimit)
+                if (currentMoveSpeed < speedLimit && currentMoveSpeed == Mathf.Clamp(currentMoveSpeed, regularMoveSpeed - 1, regularMoveSpeed + 1))
                 {
-                    currentMoveSpeed += /*regularMoveSpeed*/ 9;
+                    currentMoveSpeed += /*regularMoveSpeed*/ regularMoveSpeed * 2;
                 }
             }
         }
