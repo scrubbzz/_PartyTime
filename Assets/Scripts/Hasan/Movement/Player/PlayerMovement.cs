@@ -10,7 +10,7 @@ namespace SnowGlobalConflict
     {
 
         [Header("Speed")]
-        public float currentMoveSpeed;
+        public float currentMoveForce;
         public int speedLimit;
         private float verticalSpeed;
         private float horizontalSpeed;
@@ -19,7 +19,7 @@ namespace SnowGlobalConflict
         public float decreaseRate;
 
         public float resetRate;
-        public float regularMoveSpeed;
+        public float regularMoveForce;
 
         private bool isMoving;
 
@@ -39,13 +39,14 @@ namespace SnowGlobalConflict
 
         public event IAudioManageable.OnMovement onMovement;
 
+       
         // Start is called before the first frame update
         void Start()
         {
             rb = GetComponent<Rigidbody>();
             //regularMoveSpeed = 3;
-            currentMoveSpeed = regularMoveSpeed;
-
+            currentMoveForce = regularMoveForce;
+            resetRate = regularMoveForce * 2; 
             movementSound = GetComponent<AudioSource>();
             onMovement += PlaySoundEffect;
         }
@@ -54,7 +55,7 @@ namespace SnowGlobalConflict
         void Update()
         {
             ReadInputs();
-            Move(currentMoveSpeed);
+            Move(currentMoveForce);
 
             if (isMoving)
             {
@@ -107,7 +108,7 @@ namespace SnowGlobalConflict
             }
         }
 
-        public void Move(float moveSpeed)
+        public void Move(float moveForce)
         {
             horizontalDirection = new Vector3(horizontalSpeed, 0, 0);
             verticalDirection = new Vector3(0, 0, verticalSpeed);
@@ -117,7 +118,22 @@ namespace SnowGlobalConflict
                  transform.forward = horizontalDirection + verticalDirection; 
              }
              */
-            rb.AddForce((horizontalDirection + verticalDirection) * moveSpeed);
+            //rb.velocity = (horizontalDirection + verticalDirection) * moveSpeed;
+           
+                rb.AddForce((horizontalDirection + verticalDirection) * moveForce, ForceMode.Impulse);
+            Vector3 rbVelocity = rb.velocity;
+            if(rbVelocity.x > speedLimit)
+            {
+                rbVelocity.x = speedLimit;
+            }
+            if(rbVelocity.z > speedLimit)
+            {
+                rbVelocity.z = speedLimit;
+            }
+            
+           /* var x = rb.velocity.x;
+            var z = rb.velocity.z;*/
+            //rb.velocity = new Vector3(Mathf.Clamp(x, -horizontalSpeed * moveSpeed, horizontalSpeed * moveSpeed), 0, Mathf.Clamp(z, -verticalSpeed * moveSpeed, verticalSpeed * moveSpeed));
         }
 
         public void PlaySoundEffect(AudioSource audioSource)
@@ -132,18 +148,18 @@ namespace SnowGlobalConflict
         }
         public void ResetSpeed()
         {
-            if (currentMoveSpeed > regularMoveSpeed)
+            if (currentMoveForce > regularMoveForce)
             {
-                currentMoveSpeed -= Time.deltaTime * resetRate;
+                currentMoveForce -= Time.deltaTime * resetRate;
             }
         }
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.tag == "Pad")
             {
-                if (currentMoveSpeed < speedLimit && currentMoveSpeed == Mathf.Clamp(currentMoveSpeed, regularMoveSpeed - 1, regularMoveSpeed + 1))
+                if (currentMoveForce < speedLimit && currentMoveForce == Mathf.Clamp(currentMoveForce, regularMoveForce - 1, regularMoveForce + 1))
                 {
-                    currentMoveSpeed += /*regularMoveSpeed*/ regularMoveSpeed * 2;
+                    currentMoveForce += /*regularMoveSpeed*/ regularMoveForce * 5;
                 }
             }
         }

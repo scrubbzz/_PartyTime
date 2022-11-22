@@ -28,6 +28,7 @@ namespace SnowGlobalConflict
         {
             coinCount++;
             coinCountUI.text = "Coins: " + coinCount.ToString();
+            cointCountGUI.text = "Coins: " + coinCount.ToString();
         }
 
         private void OnTriggerEnter(Collider other)

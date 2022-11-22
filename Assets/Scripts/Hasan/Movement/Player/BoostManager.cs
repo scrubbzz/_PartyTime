@@ -17,7 +17,7 @@ namespace SnowGlobalConflict
         // Update is called once per frame
         void Update()
         {
-            if (playerMovement.currentMoveSpeed > playerMovement.regularMoveSpeed)
+            if (playerMovement.currentMoveForce > playerMovement.regularMoveForce)
             {
                 playerMovement.movementSound.clip = Resources.Load<AudioClip>("SFX/fling");
                 if (boostTrail != null)

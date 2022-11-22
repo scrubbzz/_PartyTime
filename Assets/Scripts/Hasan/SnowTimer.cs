@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace SnowGlobalConflict
 {
@@ -13,6 +14,8 @@ namespace SnowGlobalConflict
 
         [SerializeField]
         private Text timerText;
+        [SerializeField]
+        private TextMeshProUGUI timerTextGUI;
 
         [SerializeField]
         private GameObject player;
@@ -27,6 +30,7 @@ namespace SnowGlobalConflict
         {
             TimeGame(gameTimer);
             timerText.text = "Time Left: " + gameTimer.ToString();
+            timerTextGUI.text = "Time Left: " + gameTimer.ToString();
         }
         public override void TimeGame(float gameTimerLength)
         {

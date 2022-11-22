@@ -36,17 +36,22 @@ namespace SnowGlobalConflict
 
                 if (hit.transform != cameraMovement.target)
                 {
-                    Material material = hit.collider.GetComponent<Renderer>().material;
-                    material.color = new Color(material.color.r, material.color.g, material.color.b, 0.2f);
-                    transparentColliders.Add(hit.collider);
-                    Debug.Log("You cant see");
+                    if (hit.collider.GetComponent<Renderer>() != null)
+                    {
+                        Material material = hit.collider.GetComponent<Renderer>().material;
+                        material.color = new Color(material.color.r, material.color.g, material.color.b, 0.2f);
+                        transparentColliders.Add(hit.collider);
+                        Debug.Log("You cant see");
+
+                    }
+
                 }
                 else
                 {
                     RestoreObjects();
                 }
             }
-            
+
             /*  if (!Physics.Raycast(ray, out hit, obstacleLayerMask))
               {
                   hitObjectMaterial = hit.collider.GetComponent<Material>().color.a;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace SnowGlobalConflict
 {
-    public class CameraMovement : MonoBehaviour
+    public class CameraMovement : MonoBehaviour, IAudioManageable
     {
         
         public Transform target;
@@ -13,11 +13,18 @@ namespace SnowGlobalConflict
 
         public string playerName;
         public Quaternion rotation;
+
+        [Header("Camera Effects")]
+        public float shakeAmount;
+        public event IAudioManageable.OnMovement onMovement;
+        
+        
         // Start is called before the first frame update
         void Start()
         {
             //target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
             target = GameObject.Find(playerName).GetComponent<Transform>();
+            onMovement += PlaySoundEffect;
         }
 
         // Update is called once per frame
@@ -30,6 +37,11 @@ namespace SnowGlobalConflict
         public void FollowPlayer()
         {
             transform.position = target.position + offset;
+        }
+
+        public void PlaySoundEffect(AudioSource audioSource)
+        {
+            
         }
     }
 }
