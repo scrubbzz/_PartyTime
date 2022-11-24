@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] string playerInput;
     [SerializeField] KeyCode jump;
 
+    public Animator runnerAnimator;
+
 
     private void FixedUpdate()
     {
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(jump))
         {
             Jump();
+            runnerAnimator.SetTrigger("Jump");
         }
 
         if (transform.position.y < -5)

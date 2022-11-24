@@ -163,6 +163,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  playerInput: Horizontal1
+  jump: 32
 --- !u!136 &248258978
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -723,8 +725,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Score : 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
+  m_sharedMaterial: {fileID: 5312148855566607506, guid: 7a585fb416d505e44ab5b34d46199ecd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
