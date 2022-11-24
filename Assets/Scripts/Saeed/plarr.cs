@@ -8,9 +8,12 @@ namespace FruitKahoot
     {
         public float speed = 0.1f;
         public float xlimit = 11.9f;
+        public Rigidbody rb;
+        
 
         void Start()
         {
+            rb = GetComponent<Rigidbody>();
 
         }
 
@@ -32,6 +35,10 @@ namespace FruitKahoot
             }
 
             Vector3 position = transform.position;
+
+          /*  rb.AddForce(new Vector3(input, 0, 0) * speed, ForceMode.Impulse);*/
+
+
             position.x = position.x + input * speed;
 
             if (position.x > xlimit)
