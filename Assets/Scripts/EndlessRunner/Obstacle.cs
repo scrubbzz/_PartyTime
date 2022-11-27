@@ -6,6 +6,8 @@ public class Obstacle : MonoBehaviour
 {
     PlayerMovement playerMovement;
 
+    [SerializeField] int reductionValue = 10; // how much to decrease player score by
+
     private void Start()
     {
         playerMovement = GameObject.FindObjectOfType<PlayerMovement>();
@@ -13,9 +15,9 @@ public class Obstacle : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
-            GameManager.inst.DecreaseScoreGrass();
+            collision.gameObject.GetComponent<PlayerCoinCounter>().DecreaseScore(reductionValue);
         }
     }
 }

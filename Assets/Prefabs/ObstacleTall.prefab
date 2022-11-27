@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6277092293178620321}
   - component: {fileID: 6570006617709874946}
   - component: {fileID: 7657507987891787234}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ObstacleTall
   m_TagString: Grass
   m_Icon: {fileID: 0}
@@ -110,3 +110,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74aa9b554944b1b479a450e4fc08cc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reductionValue: 10
