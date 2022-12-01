@@ -113,7 +113,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f693d75327970408ef6109d8609833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 128
   boxParticles: {fileID: 4494809936504998820}
+  valueInCoins: 10
 --- !u!54 &472532088221561704
 Rigidbody:
   m_ObjectHideFlags: 0

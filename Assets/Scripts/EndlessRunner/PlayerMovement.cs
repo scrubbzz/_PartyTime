@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     bool alive = true;
-    
-    [SerializeField] float speed = 5;
+
+    [SerializeField] float acceleration = 10;
+    [SerializeField] float maxSpeed = 5;
     [SerializeField] Rigidbody rb;
+    Collider col;
 
     float horizontalInput;
     public float horizontalMultiplier = 2;
@@ -22,18 +24,22 @@ public class PlayerMovement : MonoBehaviour
     public Animator runnerAnimator;
 
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
+    }
+
     private void FixedUpdate()
     {
         if (!alive) return;
 
-        Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
-        Vector3 horizontalMove = transform.right * horizontalInput * speed * Time.fixedDeltaTime * horizontalMultiplier;
-        rb.MovePosition(rb.position + forwardMove + horizontalMove); 
+        CalculateMovement();
     }
 
     void Update()
     {
-        horizontalInput = Input.GetAxis(playerInput);
+        horizontalInput = Input.GetAxisRaw(playerInput) * horizontalMultiplier;
 
         if (Input.GetKeyDown(jump))
         {
@@ -44,6 +50,49 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y < -5)
         {
             Die();
+        }
+    }
+
+    void CalculateMovement()
+    {
+
+        Vector3 forwardMove = acceleration * Time.deltaTime * Vector3.forward;
+        rb.AddForce(forwardMove, ForceMode.Impulse);
+
+        Vector3 horizontalMove = horizontalInput * Time.deltaTime * Vector3.right;
+        rb.AddForce(horizontalMove, ForceMode.Force);
+
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            float speedLimitingForce = maxSpeed - rb.velocity.magnitude;
+            rb.AddForce(rb.velocity.normalized * speedLimitingForce);
+        }
+
+        if (rb.velocity.x > - 0.05f || rb.velocity.x < 0.05f)
+        {
+            float oppositeForce = -rb.velocity.x * 2;
+            rb.AddForce(new Vector3(oppositeForce, 0f));
+        }
+
+        //rb.velocity += Vector3.ClampMagnitude(forwardMove + horizontalMove, 20);
+        //rb.MovePosition(rb.position + forwardMove + horizontalMove); 
+    }
+
+    /*bool ObstacleInWay()
+    {
+        float frontWidth = col.bounds.size.z / 2;
+
+        return Physics.Raycast(transform.position, Vector3.forward, frontWidth + 0.3f, obstacleMask);
+    }*/
+
+    void Jump()
+    {
+        float height = col.bounds.size.y;
+        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, (height / 2) + 0.1f, groundMask);
+
+        if (isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce);
         }
     }
 
@@ -60,14 +109,5 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    void Jump()
-    {
-        float height = GetComponent<Collider>().bounds.size.y;
-        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, (height / 2) + 0.1f, groundMask);
-
-        if (isGrounded)
-        {
-            rb.AddForce(Vector3.up * jumpForce);
-        }      
-    }
+    
 }

@@ -17,6 +17,8 @@ public class GroundTile : MonoBehaviour
     [SerializeField] int boxesToSpawn = 1;
 
     int triggerCount = 0;
+
+
     void Start()
     {
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
@@ -29,8 +31,8 @@ public class GroundTile : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         groundSpawner.SpawnTile(true);
-        if (triggerCount > 1) { Destroy(gameObject, 2); }
-        Destroy(gameObject, 2);
+        if (triggerCount > 1) { Destroy(gameObject, 5); }
+        Destroy(gameObject, 5);
         
     }
 

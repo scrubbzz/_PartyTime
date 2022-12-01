@@ -5,33 +5,34 @@ using UnityEngine;
 
 public class CoinBox : MonoBehaviour
 {
+
+    [SerializeField] LayerMask obstacleLayer;
     [SerializeField] GameObject boxParticles;
+
+    [SerializeField] int valueInCoins = 10;
+
 
     private void OnCollisionEnter(Collision collision)
     {
-        boxParticles.SetActive(true);
-        gameObject.transform.DetachChildren();
 
-        if (collision.gameObject.GetComponent<Obstacle>() != null)
+        if (collision.gameObject.layer == obstacleLayer)
         {
             Destroy(gameObject);
             return;
         }
 
-        if (collision.gameObject.name != "Player")
+        PlayerCoinCounter player = collision.gameObject.GetComponent<PlayerCoinCounter>();
+
+        if (player != null)
         {
-            return;
+            boxParticles.SetActive(true);
+            gameObject.transform.DetachChildren();
+
+            player.IncrementScore(valueInCoins);
+
+            Destroy(gameObject, 0.05f);
         }
 
-        GameManager.inst.IncrementScoreBox();
-        
-        StartCoroutine(DestroyBoxTimer());
-    }
-
-    IEnumerator DestroyBoxTimer()
-    {
-        yield return new WaitForSeconds(0.05f);
-        Destroy(gameObject);
     }
 
 }
