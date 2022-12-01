@@ -9,7 +9,8 @@ namespace FruitKahoot
         public float speed = 0.1f;
         public float xlimit = 11.9f;
         public Rigidbody rb;
-        
+        public GameObject moveParticles;
+        public Animator fruitPlayerAnim;
 
         void Start()
         {
@@ -24,6 +25,9 @@ namespace FruitKahoot
 
             if (input != 0)
             {
+                moveParticles.SetActive(true);
+                fruitPlayerAnim.SetBool("Run", true);
+
                 if (input > 0f)
                 {
                     transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
@@ -32,6 +36,13 @@ namespace FruitKahoot
                 {
                     transform.GetChild(0).localScale = new Vector3(1, 1, 1);
                 }
+            }
+
+            if (input == 0) 
+            {
+                StartCoroutine(ParticleTimer());
+                fruitPlayerAnim.SetBool("Run", false);
+                fruitPlayerAnim.SetBool("Idle", true);
             }
 
             Vector3 position = transform.position;
@@ -52,6 +63,12 @@ namespace FruitKahoot
             }
 
             transform.position = position;
+        }
+
+        IEnumerator ParticleTimer()
+        {
+            yield return new WaitForSeconds(0.2f);
+            moveParticles.SetActive(false);
         }
     }
 

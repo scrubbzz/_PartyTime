@@ -8,6 +8,8 @@ TagManager:
   - Coin
   - CoinBox
   - Pad
+  - Fruit
+  - Bomb
   layers:
   - Default
   - TransparentFX
