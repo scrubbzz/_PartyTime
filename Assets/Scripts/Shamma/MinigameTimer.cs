@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// ***
+
+// DEPRECATED
+// inherit from TimerControllableHandler instead.
+
+// ***
 namespace Minigames.Generic
 { 
     /// <summary>
@@ -17,7 +23,7 @@ namespace Minigames.Generic
 
         void Start()
         {
-            objectHandler = new TimerControllableHandler();
+            //objectHandler = new TimerControllableHandler();
 
             // start all objects after game begins
         }
