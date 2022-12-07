@@ -22,10 +22,15 @@ namespace Menus
         public GameObject sold1;
         public GameObject sold2;
         public GameObject sold3;
-        
+
+        public AudioSource caChing;
 
         public GameObject inSuffFunds;
 
+        private void Start()
+        {
+            Time.timeScale = 1.0f;
+        }
         public void BoxerGuy()
         {
             if (starAmount >= 800 && hasBoxer == false)
@@ -70,24 +75,28 @@ namespace Menus
         {
             starAmount = starAmount + 1000;
             starText.text = "Party Dollars : " + starAmount;
+            caChing.Play();
         }
 
         public void IncrementStarsBy2800()
         {
             starAmount = starAmount + 2800;
             starText.text = "Party Dollars : " + starAmount;
+            caChing.Play();
         }
 
         public void IncrementStarsBy5000()
         {
             starAmount = starAmount + 5000;
             starText.text = "Party Dollars : " + starAmount;
+            caChing.Play();
         }
 
         public void IncrementStarsBy13500()
         {
             starAmount = starAmount + 13500;
             starText.text = "Party Dollars : " + starAmount;
+            caChing.Play();
         }
 
     }
