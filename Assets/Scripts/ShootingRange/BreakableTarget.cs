@@ -9,29 +9,39 @@ namespace StraightShootin
     /// Attached to objects meant to be shot at. Handles damage calculation and effect displays when hit, 
     /// and follows a select movement pattern (yet to be implemented).
     /// </summary>
-    public class ShooterTarget : MonoBehaviour
+    public class BreakableTarget : MonoBehaviour
     {
-        Vector3 direction = Vector3.zero;
-        public float moveSpeed = 1;
 
         public float damageTotalRequired = 20;
         public float damageAllowance = 10; // value representing leeway the player has to not perfectly hit the damage required value and still break the target. 
                                            // the higher the leeway, the easier it is for the player to successfully break the target
 
+
         public int valueInCoins;
+        float timeActive;
+
+        [SerializeField] float maxLifetime = 6f;
+
+
+        Vector3 direction = Vector3.zero;
+        public float moveSpeed = 1;
+
+
+
 
         public AudioClip successBreakSound;
         public AudioClip failBreakSound;
         public AudioClip noBreakSound;
-
-        float timeActive;
-
-        Renderer targetRenderer;
-
         AudioSource audioSource; // to do: implement audio interface.
+
 
         GameObject targetEffectsObj;
         ParticleSystem particles;
+
+
+        Renderer targetRenderer;
+
+
 
         private void OnEnable()
         {
@@ -44,7 +54,7 @@ namespace StraightShootin
                 this.direction = Vector3.right; // move right
             }
 
-            targetRenderer = GetComponent<Renderer>();
+            targetRenderer = GetComponentInChildren<Renderer>();
 
             targetEffectsObj = transform.GetChild(0).gameObject;
             particles = targetEffectsObj.GetComponent<ParticleSystem>();
@@ -64,7 +74,7 @@ namespace StraightShootin
             transform.position += direction * moveSpeed * Time.deltaTime;
             timeActive += Time.deltaTime;
 
-            if (!targetRenderer.isVisible && timeActive > 1)
+            if (!targetRenderer.isVisible && timeActive > maxLifetime)
             {
                 Destroy(gameObject);
                 //Debug.Log("despawned");
@@ -87,7 +97,7 @@ namespace StraightShootin
                 audioSource.clip = successBreakSound;
                 audioSource.Play();
 
-                transform.DetachChildren();
+                particles.gameObject.transform.parent = null;
 
                 Destroy(gameObject);
                 Debug.Log("you got " + valueInCoins + " coins!");
@@ -105,7 +115,7 @@ namespace StraightShootin
                 audioSource.clip = failBreakSound;
                 audioSource.Play();
 
-                transform.DetachChildren();
+                particles.gameObject.transform.parent = null;
 
                 Destroy(gameObject);
                 Debug.Log("target was hit too hard");

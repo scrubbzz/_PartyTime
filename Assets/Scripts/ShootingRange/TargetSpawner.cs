@@ -1,94 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 namespace StraightShootin
 {
     /// <summary>
-    /// Spawns objects within its spawnableTargets list at the edges of the screen. 
+    /// Spawns objects within its spawnableTargets list at the edges of the screen, after a random interval of time passes.
     /// </summary>
-    /// TODO: move time tracking functionality to its own script
-    public class TargetSpawner : MonoBehaviour
+    public class TargetSpawner : MonoBehaviour, Minigames.Generic.ITimerControllable
     {
 
-        public bool spawningIsActive;
+        bool spawningIsActive = false;
 
         public float spawnDistanceOnZ = 5f;
-        public float spawnDistanceFudging = 2.5f;
+        public float spawnDistanceFudging = 2.5f; // amount of possible variance for the spawn distance,
+                                                  // more means targets can spawn further forward and backward from the main spawn distance
 
-        public float minPossibleSpawnTime = 5f;
-        public float maxPossibleSpawnTime = 5f;
-        float approximateSpawnTime = 5f;
-        float spawnCountdown;
+        public float minPossibleSpawnTime = 1.7f;
+        public float maxPossibleSpawnTime = 3f;
 
-        public float gameLength = 60f;
-        float originalGameLength = 60f;
+        float spawnTimeCounter;
+        float timeToNextSpawn = 0f;
+
 
         public List<GameObject> spawnableTargets = new List<GameObject>();
-        List<GameObject> inSceneTargets = new List<GameObject>();
 
 
-        public TextMeshProUGUI testTimer;
-
-
-        private void Update()
+        // subscribe and unsubscribe to timer events
+        private void OnEnable()
         {
-            // to do: update to use timer inheritance instead. 
-            if (spawningIsActive)
+            if (FindObjectOfType<ShootingRangeTimer>())
             {
-                float time = Mathf.FloorToInt(gameLength % 60);
-                testTimer.text = "" + time;
-
-                spawnCountdown += Time.deltaTime;
-
-                gameLength -= Time.deltaTime;
-
-                if (spawnCountdown > approximateSpawnTime)
-                {
-                    GenerateTarget();
-                    spawnCountdown = 0;
-                    approximateSpawnTime = Random.Range(minPossibleSpawnTime, maxPossibleSpawnTime);
-                }
+                ShootingRangeTimer.OnStarting += OnStartTime;
+                ShootingRangeTimer.OnStopping += OnStopTime;
             }
-
-            if (gameLength <= 0 && spawningIsActive)
+        }
+        private void OnDisable()
+        {
+            if (FindObjectOfType<ShootingRangeTimer>())
             {
-                spawningIsActive = false;
-                
-
-                GameObject[] playerObjs = GameObject.FindGameObjectsWithTag("Player");
-                PlayerAim[] players = new PlayerAim[playerObjs.Length];
-
-                for (int i = 0; i < playerObjs.Length; i++)
-                {
-                    players[i] = playerObjs[i].GetComponent<PlayerAim>();
-                }
-
-                GameObject player = null;
-                int coins = 0;
-                for (int i = 0; i < players.Length; i++)
-                {
-                    if (players[i].coinCounter > coins)
-                    {
-                        coins = players[i].coinCounter;
-                        player = players[i].gameObject;
-                    }
-                }
-
-                testTimer.text = "Time's up! \nWinner is: " + player.name;
-                //Debug.Log("Time's up!");
+                ShootingRangeTimer.OnStarting -= OnStartTime;
+                ShootingRangeTimer.OnStopping -= OnStopTime;
             }
-
-            // for testing purposes
-            if (Input.GetKeyDown(KeyCode.Alpha0))
-            {
-                gameLength = originalGameLength;
-                spawningIsActive = true;
-            }
-
         }
 
+
+        public void OnStartTime() { spawningIsActive = true; }
+        public void OnStopTime() { spawningIsActive = false; }
+
+
+        // target spawning intervals are randomised separate from game timer. still need game timer to activate spawner
+        private void Update()
+        {
+            if (spawningIsActive)
+            {
+                spawnTimeCounter += Time.deltaTime;
+
+                if (spawnTimeCounter > timeToNextSpawn)
+                {
+                    GenerateTarget();
+                    spawnTimeCounter = 0;
+                    timeToNextSpawn = Random.Range(minPossibleSpawnTime, maxPossibleSpawnTime);
+                }
+            }
+        }
+
+
+        // spawn a random gameObject in our list on the edge of the screen, add the target script to it.
         void GenerateTarget()
         {
 
@@ -111,11 +89,10 @@ namespace StraightShootin
             if (generatedTarget == null)
                 Debug.LogError("something went wrong with spawning the target.");
             else
-            {
-                generatedTarget.AddComponent<ShooterTarget>();
-
-            }
+                generatedTarget.AddComponent<BreakableTarget>();
 
         }
+
+        
     }
 }

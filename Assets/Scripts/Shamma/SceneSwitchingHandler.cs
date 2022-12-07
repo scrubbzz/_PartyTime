@@ -53,7 +53,7 @@ namespace Minigames.Generic {
 
         void ShuffleMinigameList()
         {
-
+            throw new System.NotImplementedException();
         }
 
         void LoadResultsScreen()

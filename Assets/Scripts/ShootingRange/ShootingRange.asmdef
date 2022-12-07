@@ -2,7 +2,8 @@
     "name": "ShootingRange",
     "rootNamespace": "",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:418498b9774d63c4a9593a063bb5c808"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
