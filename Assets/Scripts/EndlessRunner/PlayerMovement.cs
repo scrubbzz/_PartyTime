@@ -7,8 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     bool alive = true;
 
-    [SerializeField] float acceleration = 10;
-    [SerializeField] float maxSpeed = 5;
+    public float acceleration = 10;
+    public float maxSpeed = 10;
     [SerializeField] Rigidbody rb;
     Collider col;
 
@@ -23,11 +23,14 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator runnerAnimator;
 
+    AudioSource jumpSound;
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+        jumpSound = GetComponent<AudioSource>(); 
     }
 
     private void FixedUpdate()
@@ -44,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(jump))
         {
             Jump();
+            jumpSound.Play();
             runnerAnimator.SetTrigger("Jump");
         }
 

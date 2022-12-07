@@ -7,11 +7,17 @@ public class CoinBox : MonoBehaviour
 {
 
     [SerializeField] LayerMask obstacleLayer;
-    [SerializeField] GameObject boxParticles;
+    [SerializeField] GameObject boxFX;
+    ParticleSystem boxParticles;
+    AudioSource boxAudio;
 
     [SerializeField] int valueInCoins = 10;
 
-
+    private void Awake()
+    {
+        boxParticles = boxFX.GetComponent<ParticleSystem>();
+        boxAudio = boxFX.GetComponent<AudioSource>();
+    }
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -25,12 +31,13 @@ public class CoinBox : MonoBehaviour
 
         if (player != null)
         {
-            boxParticles.SetActive(true);
+            boxParticles.Play();
+            boxAudio.Play();
             gameObject.transform.DetachChildren();
 
             player.IncrementScore(valueInCoins);
 
-            Destroy(gameObject, 0.05f);
+            Destroy(gameObject);
         }
 
     }

@@ -22,6 +22,7 @@ namespace Menus
         public GameObject sold1;
         public GameObject sold2;
         public GameObject sold3;
+        
 
         public GameObject inSuffFunds;
 
