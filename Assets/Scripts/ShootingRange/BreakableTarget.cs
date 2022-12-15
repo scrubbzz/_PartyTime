@@ -90,7 +90,7 @@ namespace StraightShootin
                 // play breaking animation
                 if (particles != null)
                 {
-                    particles.startColor = Color.yellow;
+                    //particles.startColor = Color.yellow;
                     particles.Play();
                 }
 
@@ -108,7 +108,7 @@ namespace StraightShootin
             {
                 if (particles != null)
                 {
-                    particles.startColor = Color.black;
+                    //particles.startColor = Color.black;
                     particles.Play();
                 }
 

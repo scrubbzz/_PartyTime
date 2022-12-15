@@ -14,6 +14,7 @@ namespace Menus
         public bool hasBoxer = false;
         public bool hasPuncher = false;
         public bool hasBroccoli = false;
+        public bool thanks = false;
 
         public GameObject boxerButton;
         public GameObject broccoliButton;   
@@ -22,6 +23,7 @@ namespace Menus
         public GameObject sold1;
         public GameObject sold2;
         public GameObject sold3;
+        public GameObject buyMore;
 
         public AudioSource caChing;
 
@@ -98,6 +100,7 @@ namespace Menus
             starText.text = "Party Dollars : " + starAmount;
             caChing.Play();
         }
+
 
     }
 }

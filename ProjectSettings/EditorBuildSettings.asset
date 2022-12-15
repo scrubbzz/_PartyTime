@@ -11,12 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 449ac8cce4ed60a4aa64b403bc2fa350
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/Hasan 1.unity
+    guid: 66096096b48c92842a68877aa5928b3b
+  - enabled: 1
     path: Assets/Scenes/Shamma.unity
     guid: a848bf06058b3a544a4456e7520266d1
-  - enabled: 1
-    path: Assets/Scenes/Hasan.unity
-    guid: fb8045fd525375d48bf220d09fda6db9
   - enabled: 1
     path: Assets/Scenes/EndlessRunner.unity
     guid: 36440fd4d51dde9429401a3d07b1cf7c
