@@ -22,11 +22,14 @@ namespace Minigames.Generic
             ClearExtraControllerObjects(players);
 
             // get list of all genericplayer objs in scene
-            PlayerGeneric[] playerControllers = GetPlayerControllers();
+            PlayerGeneric[] playerControllers = PlayerSelector.GetPlayersInScene(); // GetPlayerControllers();
 
             // hook up each playerdata's input values to each genericplayer obj (call the function from genericplayer)
             // ensure models are loaded
-            for (int i = 0; i < playerControllers.Length; i++) { playerControllers[i].Initialise(players[i]); }
+            for (int i = 0; i < playerControllers.Length; i++) 
+            { 
+                playerControllers[i].Initialise(players[i]); 
+            }
 
         }
 
@@ -44,7 +47,7 @@ namespace Minigames.Generic
             }
         }
 
-        static PlayerGeneric[] GetPlayerControllers()
+        /*static PlayerGeneric[] GetPlayerControllers()
         {
             GameObject[] controllerObjs = GameObject.FindGameObjectsWithTag("Player");
             PlayerGeneric[] controllers = new PlayerGeneric[controllerObjs.Length];
@@ -55,7 +58,7 @@ namespace Minigames.Generic
             }
             
             return controllers;
-        }
+        }*/
 
         static void PassPlayersToNextScene()
         {

@@ -16,7 +16,7 @@ namespace Minigames.Generic
     public class MinigameTimer : MonoBehaviour
     {
 
-        TimerControllableHandler objectHandler;
+        TimeControllableHandler objectHandler;
 
         float remainingTime;
         float totalTime;

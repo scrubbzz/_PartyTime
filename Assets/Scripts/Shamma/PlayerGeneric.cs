@@ -13,7 +13,7 @@ namespace Minigames.Generic
         // model reference
         MeshFilter meshFilter;
         MeshRenderer meshRenderer;
-        int totalCoins;
+        public int coinCount;
 
         public void Initialise(PlayerScenePersistentData data)
         {

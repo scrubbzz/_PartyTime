@@ -7,8 +7,13 @@ public class GroundSpawner : MonoBehaviour
     public GameObject groundTile;
     Vector3 spawnPoint;
 
+    public int playerCount { get; private set; }
+
     void Start()
     {
+        PlayerMovement[] players = FindObjectsOfType<PlayerMovement>();
+        playerCount = players.Length;
+
         for (int i = 0; i < 15; i++)
         {
             if (i < 3) { SpawnTile(false); }
@@ -23,9 +28,10 @@ public class GroundSpawner : MonoBehaviour
 
         if (spawnItems)
         {
-            temp.GetComponent<GroundTile>().SpawnObstacle();
-            temp.GetComponent<GroundTile>().SpawnCoins();
-            temp.GetComponent<GroundTile>().SpawnCoinBox();
+            GroundTile tile = temp.GetComponent<GroundTile>();
+            tile.SpawnObstacle();
+            tile.SpawnCoins();
+            tile.SpawnCoinBox();
         }
     }
 

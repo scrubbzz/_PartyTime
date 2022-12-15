@@ -8,11 +8,11 @@ namespace Minigames.Generic
     /// For minigame timers to inherit from, in order to handle objects when stopping and starting games. this class
     /// inherits from MonoBehaviour for access to Start and Update.
     /// </summary>
-    public abstract class TimerControllableHandler : MonoBehaviour
+    public abstract class TimeControllableHandler : MonoBehaviour
     {
         protected bool tickingActive;
-        public float timePassed { get; protected set; }
-        public float timeRemaining { get; protected set; }
+        public static float timePassed { get; protected set; }
+        public static float timeRemaining { get; protected set; }
 
         protected float timeLimit = 60f; // value for inheriting timers to determine when to call StopObjects
 
@@ -44,16 +44,12 @@ namespace Minigames.Generic
             timePassed += Time.deltaTime;
             timeRemaining -= Time.deltaTime;
 
-            if (OnCountingDown != null) 
-            { OnCountingDown(); }
+            if (OnCountingDown != null) { OnCountingDown(); }
         }
 
         protected virtual void StartObjects()
         {
-            if (OnStarting != null)
-            {
-                OnStarting();
-            }
+            if (OnStarting != null) { OnStarting(); }
 
             /*foreach (ITimerControllable controllable in controllables)
             {
@@ -63,10 +59,7 @@ namespace Minigames.Generic
 
         protected virtual void StopObjects()
         {
-            if (OnStopping != null)
-            {
-                OnStopping();
-            }
+            if (OnStopping != null) { OnStopping(); }
         }
         
     }

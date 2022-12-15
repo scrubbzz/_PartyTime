@@ -40,7 +40,7 @@ namespace StraightShootin
     /// Handles player input, and sending commands to the arrow that it generates. 
     /// </summary>
     /// TODO: Move variables and input checking to their own smaller classes
-    public class PlayerAim : MonoBehaviour, Minigames.Generic.ITimerControllable
+    public class PlayerAim : MonoBehaviour, Minigames.Generic.ITimeControllable
     {
         [SerializeField] PassablePlayerAimData playerData;
 
