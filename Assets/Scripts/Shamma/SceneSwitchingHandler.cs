@@ -16,18 +16,14 @@ namespace Minigames.Generic {
         static int completedMinigameCount = 0;
         static int totalMinigamesToComplete = 3;
 
-        // called by the round handler when beginning a round
-        public void BeginLoadMinigame(PlayerScenePersistentData[] playerData)
-        {
-            completedMinigameCount = 0;
-
-            ShuffleMinigameList();
-            DetermineAndLoadNextScene(playerData);
-        }
-
 
         public void DetermineAndLoadNextScene(PlayerScenePersistentData[] playerData)
         {
+            if (completedMinigameCount == 0)
+            {
+                ShuffleMinigameList();
+            }
+
             // check if we should load a minigame
             if (ShouldLoadMinigame())
             {
@@ -47,8 +43,10 @@ namespace Minigames.Generic {
         bool ShouldLoadMinigame()
         {
             // if there's a tie, minus the minigame count so there's one more minigame to play
-            if (completedMinigameCount < totalMinigamesToComplete) return true;
-            else return false;
+            if (completedMinigameCount < totalMinigamesToComplete) 
+                return true;
+            else 
+                return false;
         }
 
         void ShuffleMinigameList()

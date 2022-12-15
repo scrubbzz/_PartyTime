@@ -5,7 +5,7 @@ using TMPro;
 
 namespace StraightShootin
 {
-    public class ShootingRangeTimer : Minigames.Generic.TimerControllableHandler
+    public class ShootingRangeTimer : Minigames.Generic.TimeControllableHandler
     {
         [SerializeField] float gameLength = 61f;
         [SerializeField] TextMeshProUGUI timerText;
@@ -19,10 +19,10 @@ namespace StraightShootin
         IEnumerator CountToMinigameStart()
         {
             timerText.text = "Ready?";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.5f);
 
             timerText.text = "Go!";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.5f);
 
             tickingActive = true;
             StartObjects();
@@ -50,35 +50,6 @@ namespace StraightShootin
 
             base.Countdown();
         }
-
-        
-
-        void SelectWinnersShooter()
-        {
-            // to do: transfer this to a function with "winner selector" script.
-
-            GameObject[] playerObjs = GameObject.FindGameObjectsWithTag("Player");
-            PlayerAim[] players = new PlayerAim[playerObjs.Length];
-
-            for (int i = 0; i < playerObjs.Length; i++)
-            {
-                players[i] = playerObjs[i].GetComponent<PlayerAim>();
-            }
-
-            GameObject player = null;
-            int coins = 0;
-            for (int i = 0; i < players.Length; i++)
-            {
-                if (players[i].coinCounter > coins)
-                {
-                    coins = players[i].coinCounter;
-                    player = players[i].gameObject;
-                }
-            }
-
-            //testTimer.text = "Time's up! \nWinner is: " + player.name;
-        }
-
 
         
 

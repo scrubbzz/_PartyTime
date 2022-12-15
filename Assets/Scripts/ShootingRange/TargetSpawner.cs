@@ -7,17 +7,20 @@ namespace StraightShootin
     /// <summary>
     /// Spawns objects within its spawnableTargets list at the edges of the screen, after a random interval of time passes.
     /// </summary>
-    public class TargetSpawner : MonoBehaviour, Minigames.Generic.ITimerControllable
+    public class TargetSpawner : MonoBehaviour, Minigames.Generic.ITimeControllable
     {
 
         bool spawningIsActive = false;
 
-        public float spawnDistanceOnZ = 5f;
-        public float spawnDistanceFudging = 2.5f; // amount of possible variance for the spawn distance,
-                                                  // more means targets can spawn further forward and backward from the main spawn distance
+        [SerializeField] float spawnDistanceOnZ = 5f;
+        [SerializeField] float spawnDistanceFudging = 2.5f; // amount of possible variance for the spawn distance,
+                                                            // more means targets can spawn further forward and backward from the main spawn distance
+        [SerializeField] float upperScreenLimit = 0.75f;
+        [SerializeField] float lowerScreenLimit = 0.3f;
 
-        public float minPossibleSpawnTime = 1.7f;
-        public float maxPossibleSpawnTime = 3f;
+
+        [SerializeField] float minPossibleSpawnTime = 1.7f;
+        [SerializeField] float maxPossibleSpawnTime = 3f;
 
         float spawnTimeCounter;
         float timeToNextSpawn = 0f;
@@ -32,6 +35,7 @@ namespace StraightShootin
             if (FindObjectOfType<ShootingRangeTimer>())
             {
                 ShootingRangeTimer.OnStarting += OnStartTime;
+                ShootingRangeTimer.OnCountingDown += OnTimerTick;
                 ShootingRangeTimer.OnStopping += OnStopTime;
             }
         }
@@ -40,6 +44,7 @@ namespace StraightShootin
             if (FindObjectOfType<ShootingRangeTimer>())
             {
                 ShootingRangeTimer.OnStarting -= OnStartTime;
+                ShootingRangeTimer.OnCountingDown -= OnTimerTick;
                 ShootingRangeTimer.OnStopping -= OnStopTime;
             }
         }
@@ -49,19 +54,12 @@ namespace StraightShootin
         public void OnStopTime() { spawningIsActive = false; }
 
 
-        // target spawning intervals are randomised separate from game timer. still need game timer to activate spawner
-        private void Update()
+        public void OnTimerTick()
         {
-            if (spawningIsActive)
+            if (spawningIsActive && ShootingRangeTimer.timePassed > timeToNextSpawn)
             {
-                spawnTimeCounter += Time.deltaTime;
-
-                if (spawnTimeCounter > timeToNextSpawn)
-                {
-                    GenerateTarget();
-                    spawnTimeCounter = 0;
-                    timeToNextSpawn = Random.Range(minPossibleSpawnTime, maxPossibleSpawnTime);
-                }
+                GenerateTarget();
+                timeToNextSpawn = Random.Range(minPossibleSpawnTime, maxPossibleSpawnTime) + ShootingRangeTimer.timePassed;
             }
         }
 
@@ -72,15 +70,7 @@ namespace StraightShootin
 
             // get a random number to select a target in the list
             int randomTargetType = Random.Range(0, spawnableTargets.Count);
-
-
-            // get a random 0-1 value for use with viewport
-            int targetPosOnX = Mathf.RoundToInt(Random.value); // round to int for solid 0 or 1 (select a side of the screen to spawn)
-            float targetPosOnY = Mathf.Clamp(Random.value, 0.25f, 0.75f); // clamp these so targets don't spawn offscreen
-
-            // convert values to the normalised viewport space (0 = leftmost, 1 = rightmost)
-            float spawnDist = Random.Range(spawnDistanceOnZ - spawnDistanceFudging, spawnDistanceOnZ + spawnDistanceFudging);
-            Vector3 offscreenPosition = Camera.main.ViewportToWorldPoint(new Vector3(targetPosOnX, targetPosOnY, spawnDist));
+            Vector3 offscreenPosition = CalculateSpawnPosition();
 
             GameObject generatedTarget = Instantiate(spawnableTargets[randomTargetType],
                                                      offscreenPosition,
@@ -93,6 +83,20 @@ namespace StraightShootin
 
         }
 
-        
+
+        Vector3 CalculateSpawnPosition()
+        {
+            // get a random 0-1 value for use with viewport
+            int targetPosOnX = Mathf.RoundToInt(Random.value); // round to int for solid 0 or 1 (select a side of the screen to spawn)
+            float targetPosOnY = Mathf.Clamp(Random.value, lowerScreenLimit, upperScreenLimit); // clamp these so targets don't spawn offscreen
+
+            // convert values to the normalised viewport space (0 = leftmost, 1 = rightmost)
+            float spawnDist = Random.Range(spawnDistanceOnZ - spawnDistanceFudging, spawnDistanceOnZ + spawnDistanceFudging);
+            Vector3 offscreenPos = Camera.main.ViewportToWorldPoint(new Vector3(targetPosOnX, targetPosOnY, spawnDist));
+
+            return offscreenPos;
+        }
+
+
     }
 }
