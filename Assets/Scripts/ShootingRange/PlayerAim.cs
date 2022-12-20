@@ -40,7 +40,7 @@ namespace StraightShootin
     /// Handles player input, and sending commands to the arrow that it generates. 
     /// </summary>
     /// TODO: Move variables and input checking to their own smaller classes
-    public class PlayerAim : MonoBehaviour, Minigames.Generic.ITimeControllable
+    public class PlayerAim : Minigames.Generic.PlayerGeneric, Minigames.Generic.ITimeControllable
     {
         [SerializeField] PassablePlayerAimData playerData;
 
@@ -50,6 +50,7 @@ namespace StraightShootin
         public string horizontalInput;
         public string verticalInput;
 
+        bool usingTouchscreen = false;
         public bool usingMouse;
         public float mouseButton;
         public KeyCode aimAndFireKey;
@@ -75,7 +76,7 @@ namespace StraightShootin
 
         // other
         Animator playerAnimator;
-        public int coinCounter;
+        //public int coinCounter;
 
         public Image crosshairImage;
 
@@ -102,6 +103,10 @@ namespace StraightShootin
             chargeBar.gameObject.SetActive(false);
             coinCounterText.gameObject.SetActive(false);
 
+            if (Application.isMobilePlatform)
+            {
+                usingTouchscreen = true;
+            }
 
             xInput = Screen.width / 2;
             yInput = Screen.height / 2;
@@ -165,20 +170,35 @@ namespace StraightShootin
         // get input
         void Update()
         {
-            xInput += Input.GetAxis(horizontalInput) * inputSensitivity;
-            yInput += Input.GetAxis(verticalInput) * inputSensitivity;
-            xInput = Mathf.Clamp(xInput, 0, Screen.width);
-            yInput = Mathf.Clamp(yInput, 0, Screen.height);
-
+            CalculateInput();
 
             crosshairImage.rectTransform.position = new Vector3(xInput, yInput);
         }
+
+        void CalculateInput()
+        {
+            if (usingTouchscreen)
+            {
+                Touch touchy = Input.GetTouch(0);
+                xInput = touchy.position.x;
+                yInput = touchy.position.y;
+            }
+            else
+            {
+                xInput += Input.GetAxis(horizontalInput) * inputSensitivity;
+                yInput += Input.GetAxis(verticalInput) * inputSensitivity;
+                xInput = Mathf.Clamp(xInput, 0, Screen.width);
+                yInput = Mathf.Clamp(yInput, 0, Screen.height);
+            }
+        }
+
+
 
         // done each frame, only while timer is active
         public void OnTimerTick()
         {
             chargeBar.value = playerData.chargeValue;
-            coinCounterText.text = "" + coinCounter;
+            coinCounterText.text = "" + coinCount;
 
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -189,67 +209,107 @@ namespace StraightShootin
             // check input each frame 
             // charge while holding, then fire on release
 
-            if ((Input.GetKeyDown(aimAndFireKey) && !usingMouse) ^ (Input.GetMouseButtonDown(0) && usingMouse))
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-
-                ResetArrow();
-                isCharging = true;
-
-                playerAnimator.SetTrigger("Charging");
-                playerAnimator.ResetTrigger("Firing");
-
-            }
-
             if (isCharging)
             {
-                transform.Rotate(Vector3.up, Mathf.DeltaAngle(transform.forward.x,
-                                                              arrow.gameObject.transform.forward.x) * 10);
-
-                CalculateCharge();
-                arrow.Aim(playerData);
+                ChargeArrow();
             }
 
-            if ((Input.GetKeyUp(aimAndFireKey) && !usingMouse) ^ (Input.GetMouseButtonUp(0) && usingMouse))
+            if (!usingTouchscreen)
             {
 
-                isCharging = false;
-                arrow.Fire(playerData);
+                if ((Input.GetKeyDown(aimAndFireKey) && !usingMouse) ^
+                    (Input.GetMouseButtonDown(0) && usingMouse))
+                {
+                    StartChargingArrow();
+                }
 
-                resetTimerIsActive = true;
-                StartCoroutine(CountdownToArrowReset());
+                if ((Input.GetKeyUp(aimAndFireKey) && !usingMouse) ^
+                    (Input.GetMouseButtonUp(0) && usingMouse))
+                { 
+                    FireArrow();
+                }
 
-                playerAnimator.SetTrigger("Firing");
-                playerAnimator.ResetTrigger("Charging");
-                //resetAllowed = false;
-                //StartCoroutine(CountdownToResetAllow());
             }
+            else
+            {
+                Touch touchy = Input.GetTouch(0);
+
+                if (touchy.phase == TouchPhase.Began)
+                    StartChargingArrow();
+                
+
+                if (touchy.phase == TouchPhase.Ended)
+                    FireArrow();
+            }
+
         }
 
 
-        /// 
-        /// 
-        /// 
-        /// 
+
+        void StartChargingArrow()
+        {
+            // make sure we're locked to the screen input-wise
+            Cursor.lockState = CursorLockMode.Locked;
+
+            // ready arrow for the chargearrow function to be called
+            ResetArrow();
+            isCharging = true;
+
+            // start the charging animation
+            playerAnimator.SetTrigger("Charging");
+            playerAnimator.ResetTrigger("Firing");
+        }
 
 
         // get the hit point for the arrow and increase charge
-        void CalculateCharge()
+        void ChargeArrow()
         {
+            // turn the player's z axis to face where the arrow points
+            transform.Rotate(Vector3.up, Mathf.DeltaAngle(transform.forward.x,
+                                                              arrow.gameObject.transform.forward.x) * 10);
+
+            // calculate the increase in charge value. clamp to not go over the limit
             playerData.chargeValue = Mathf.MoveTowards(playerData.chargeValue, 
                                                        playerData.chargeLimit, 
                                                        chargeSpeed * Time.deltaTime);
             playerData.chargeValue = Mathf.Clamp(playerData.chargeValue, 0, playerData.chargeLimit);
 
+            // raycast to where the crosshair's onscreen position corresponds to in the world
             Ray aim = Camera.main.ScreenPointToRay(crosshairImage.transform.position);
             Physics.Raycast(aim, out playerData.hit, 50);
+
+            // give the arrow data to use while charging (eg aim direction, charge sfx)
+            arrow.Aim(playerData);
         }
+
+        void FireArrow()
+        {
+            // have arrow shoot itself with the provided data
+            isCharging = false;
+            arrow.Fire(playerData);
+
+            // begin counting down to resetting the arrow state
+            resetTimerIsActive = true;
+            StartCoroutine(CountdownToArrowReset());
+
+            // play firing animation
+            playerAnimator.SetTrigger("Firing");
+            playerAnimator.ResetTrigger("Charging");
+            //resetAllowed = false;
+            //StartCoroutine(CountdownToResetAllow());
+        }
+
+
+        /// 
+        /// 
+        /// 
+        /// 
 
 
         // call target's function, add its coin value if broken successfully
         public void CheckTargetDamage(BreakableTarget target)
         {
-            coinCounter += target.CalculateDamageTaken(playerData.chargeValue, this); // add coins if target broke successfully
+            coinCount += target.CalculateDamageTaken(playerData.chargeValue, this); // add coins if target broke successfully
         }
 
 

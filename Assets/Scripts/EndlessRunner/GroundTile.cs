@@ -34,7 +34,7 @@ public class GroundTile : MonoBehaviour
     {
         groundSpawner.SpawnTile(true);
 
-        if (triggerCount > groundSpawner.playerCount)
+        if (triggerCount == groundSpawner.playerCount)
             Destroy(gameObject, despawnTime);
     }
 
