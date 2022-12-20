@@ -6,17 +6,17 @@ namespace FruitKahoot
 {
     public class FallinBombs : MonoBehaviour
     {
-        public float speed;
-        public Sprite[] sprites;
-        void Start()
+        private float speed;
+        public float minSpeed;
+        public float maxSpeed;
+        //public GameObject[] bombs;
+        void OnEnable()
         {
             Vector3 position = transform.position;
             position.x = Random.Range(-9, 10);
-            speed = Random.Range(6, 12);
+            speed = Random.Range(minSpeed, maxSpeed);
             transform.position = position;
-            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
-
+            
         }
 
         void Update()
@@ -25,8 +25,20 @@ namespace FruitKahoot
             position.y = position.y - speed * Time.deltaTime;
             transform.position = position;
 
-            Manager.Instance.CollectBombs(gameObject);
+            
 
+        }
+        public void OnTriggerEnter(Collider collision)
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                Manager.Instance.CollectBombs(gameObject);
+            }
+
+            if (collision.gameObject.tag == "Plane")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

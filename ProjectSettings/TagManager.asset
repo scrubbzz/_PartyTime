@@ -10,6 +10,7 @@ TagManager:
   - Pad
   - Fruit
   - Bomb
+  - Plane
   layers:
   - Default
   - TransparentFX

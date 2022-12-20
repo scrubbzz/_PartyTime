@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 23610094137429016}
   - component: {fileID: 3113362104092610791}
   - component: {fileID: 7634269635475406039}
+  - component: {fileID: 7995808659524013705}
+  - component: {fileID: 3400739807063699047}
   m_Layer: 0
   m_Name: watermelon
   m_TagString: Fruit
@@ -102,6 +104,33 @@ Rigidbody:
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!135 &7634269635475406039
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125202155953082}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.008497914
+  m_Center: {x: 0.0001944243, y: 0.0010620988, z: 0}
+--- !u!114 &7995808659524013705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125202155953082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2721455efe4736d4a87f6be3e939597a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 4
+  maxSpeed: 5
+--- !u!135 &3400739807063699047
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

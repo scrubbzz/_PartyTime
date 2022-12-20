@@ -11,17 +11,23 @@ namespace FruitKahoot
         public Rigidbody rb;
         public GameObject moveParticles;
         public Animator fruitPlayerAnim;
+        public float jumpForce = 2f;
+        public float gravityvalue;
+        public bool isGrounded;
+        public string movementInput;
+        public KeyCode jumpKey;
 
         void Start()
         {
             rb = GetComponent<Rigidbody>();
+            Physics.gravity = new Vector3(0,gravityvalue,0);
 
         }
 
 
         void Update()
         {
-            float input = Input.GetAxis("Horizontal");
+            float input = Input.GetAxis(movementInput);
 
             if (input != 0)
             {
@@ -38,7 +44,7 @@ namespace FruitKahoot
                 }
             }
 
-            if (input == 0) 
+            if (input == 0)
             {
                 StartCoroutine(ParticleTimer());
                 fruitPlayerAnim.SetBool("Run", false);
@@ -47,7 +53,13 @@ namespace FruitKahoot
 
             Vector3 position = transform.position;
 
-          /*  rb.AddForce(new Vector3(input, 0, 0) * speed, ForceMode.Impulse);*/
+            if (Input.GetKeyDown(jumpKey) && isGrounded)
+            {
+                rb.AddForce(new Vector3(0, jumpForce, 0) * speed, ForceMode.Impulse);
+                isGrounded = false;
+
+            }
+
 
 
             position.x = position.x + input * speed;
@@ -63,6 +75,14 @@ namespace FruitKahoot
             }
 
             transform.position = position;
+        }
+
+        public void OnCollisionEnter(Collision collision)
+        {
+            if(collision.gameObject.tag == "Plane")
+            {
+                isGrounded = true;
+            }
         }
 
         IEnumerator ParticleTimer()

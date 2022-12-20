@@ -24817,6 +24817,8 @@ GameObject:
   - component: {fileID: 1658750341550788980}
   - component: {fileID: 1605383960011743904}
   - component: {fileID: 3892248157232996850}
+  - component: {fileID: -7604098441910981347}
+  - component: {fileID: 4390862966757512902}
   m_Layer: 0
   m_Name: Mon_00 1
   m_TagString: Bomb
@@ -24879,6 +24881,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-7604098441910981347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662413269915015280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5b792897ecd7d4e9f9e78e2b48d2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 1
+  maxSpeed: 2
+--- !u!135 &4390862966757512902
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662413269915015280}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.31602278
+  m_Center: {x: -0.01, y: 0.37, z: -0.03}
 --- !u!1 &1662435942333836836
 GameObject:
   m_ObjectHideFlags: 0
