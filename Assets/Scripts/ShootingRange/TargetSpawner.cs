@@ -41,6 +41,8 @@ namespace StraightShootin
                 ShootingRangeTimer.OnCountingDown += OnTimerTick;
                 ShootingRangeTimer.OnStopping += OnStopTime;
             }
+
+            Physics.gravity = new Vector3(0, -10f); // I shouldn't be stuffing this in here but there's no great place to put it?
         }
         private void OnDisable()
         {
@@ -81,7 +83,7 @@ namespace StraightShootin
 
             if (generatedTarget == null)
                 Debug.LogError("something went wrong with spawning the target.");
-            else
+            else if (generatedTarget.GetComponent<BreakableTarget>() == null)
                 generatedTarget.AddComponent<BreakableTarget>();
 
         }

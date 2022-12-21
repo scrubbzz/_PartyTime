@@ -38,7 +38,9 @@ namespace StraightShootin
                 {
                     StopObjects(); // have the winner determine script subscribe to this.
                     tickingActive = false;
-                    timerText.text = "Time's up!";
+
+                    GameObject player = Minigames.Generic.PlayerSelector.GetRoundWinner();
+                    timerText.text = "Time's up!\nThe winner is: " + player.name;
                 }
             }
         }

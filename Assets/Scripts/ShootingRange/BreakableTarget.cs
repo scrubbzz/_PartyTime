@@ -20,7 +20,7 @@ namespace StraightShootin
         public int valueInCoins;
         float timeActive;
 
-        [SerializeField] float maxLifetime = 6f;
+        [SerializeField] float maxLifetime = 12f;
 
 
         Vector3 direction = Vector3.zero;
@@ -81,46 +81,28 @@ namespace StraightShootin
             }
         }
 
-
+        // check how much damage the player dealt to this target, and reward (return) points accordingly.
         public int CalculateDamageTaken(float damageValue, PlayerAim player)
         {
             // award points when in the green zone for damage
-            if (damageValue > damageTotalRequired - damageAllowance && damageValue < damageTotalRequired + damageAllowance)
+            //    EDIT: ended up commenting out the "target breaks unsuccessfully" mechanic. 
+            //    after some testing players seem unclear on whether they scored points.
+
+            if (damageValue > damageTotalRequired - damageAllowance)// && damageValue < damageTotalRequired + damageAllowance)
             {
-                // play breaking animation
-                if (particles != null)
-                {
-                    //particles.startColor = Color.yellow;
-                    particles.Play();
-                }
+                DestroyTarget(successBreakSound);
 
-                audioSource.clip = successBreakSound;
-                audioSource.Play();
-
-                particles.gameObject.transform.parent = null;
-
-                Destroy(gameObject);
-                Debug.Log("you got " + valueInCoins + " coins!");
+                //Debug.Log("you got " + valueInCoins + " coins!");
                 return valueInCoins;
 
             }
-            else if (damageValue > damageTotalRequired + damageAllowance) // destroy when over the damage limit
+            /*else if (damageValue > damageTotalRequired + damageAllowance) // destroy when over the damage limit
             {
-                if (particles != null)
-                {
-                    //particles.startColor = Color.black;
-                    particles.Play();
-                }
+                DestroyTarget(failBreakSound);
 
-                audioSource.clip = failBreakSound;
-                audioSource.Play();
-
-                particles.gameObject.transform.parent = null;
-
-                Destroy(gameObject);
-                Debug.Log("target was hit too hard");
+                //Debug.Log("target was hit too hard");
                 return 0;
-            }
+            }*/
             else
             {
                 audioSource.clip = noBreakSound;
@@ -132,6 +114,22 @@ namespace StraightShootin
 
         }
 
+        void DestroyTarget(AudioClip clip)
+        {
+            // play breaking animation
+            if (particles != null)
+            {
+                //particles.startColor = Color.yellow;
+                particles.Play();
+            }
+
+            audioSource.clip = clip;
+            audioSource.Play();
+
+            particles.gameObject.transform.parent = null;
+
+            Destroy(gameObject);
+        }
 
     }
 }
