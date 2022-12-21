@@ -20,7 +20,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndlessRunner.unity
     guid: 36440fd4d51dde9429401a3d07b1cf7c
-  - enabled: 1
-    path: Assets/Scenes/Saeed.unity
-    guid: 25de5bd6ab8f9954c857f1f1f53440ad
   m_configObjects: {}

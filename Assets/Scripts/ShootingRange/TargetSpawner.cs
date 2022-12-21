@@ -28,7 +28,10 @@ namespace StraightShootin
 
         public List<GameObject> spawnableTargets = new List<GameObject>();
 
-
+        private void Start()
+        {
+            Time.timeScale = 1f;
+        }
         // subscribe and unsubscribe to timer events
         private void OnEnable()
         {
