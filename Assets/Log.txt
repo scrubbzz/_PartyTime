@@ -1,15 +1,56 @@
 Login log 
 
-Login Date: 12/15/2022 8:04:31 AM
-Login Date: 12/15/2022 8:04:37 AM
-Login Date: 12/15/2022 8:15:33 AM
-Login Date: 12/15/2022 8:19:31 AM
-Login Date: 12/15/2022 8:22:32 AM
-Login Date: 12/15/2022 8:24:10 AM
-Login Date: 12/15/2022 8:24:17 AM
-Login Date: 12/15/2022 8:31:20 AM
-Login Date: 12/15/2022 11:05:54 AM
-Login Date: 12/15/2022 11:07:54 AM
-Login Date: 12/15/2022 11:09:10 AM
-Login Date: 12/15/2022 11:09:25 AM
-Login Date: 12/15/2022 11:10:52 AM
+Login Date: 12/21/2022 2:00:05 PM
+Time Played: 00:00:01.6120000
+Login Date: 12/21/2022 2:00:49 PM
+Time Played: 00:00:01.1800000
+Main Menu 
+
+Login Date: 12/21/2022 2:02:21 PM
+Time Played: 00:00:01.8750000
+Login Date: 12/21/2022 2:02:42 PM
+Time Played: 00:00:02.4070000
+Login Date: 12/21/2022 2:05:46 PM
+Time Played: 00:00:01.9620000
+Login Date: 12/21/2022 2:05:57 PM
+Time Played: 00:00:05.6900000
+Login Date: 12/21/2022 2:05:57 PM
+Time Played: 00:00:05.6900000
+Login Date: 12/21/2022 2:06:11 PM
+Time Played: 00:00:12.7300000
+Login Date: 12/21/2022 2:06:11 PM
+Time Played: 00:00:12.7300000
+Login Date: 12/21/2022 2:06:11 PM
+Time Played: 00:00:12.7300000
+Login Date: 12/21/2022 2:06:22 PM
+Time Played: 00:00:19.4120000
+Login Date: 12/21/2022 2:06:22 PM
+Time Played: 00:00:19.4120000
+Login Date: 12/21/2022 2:06:22 PM
+Time Played: 00:00:19.4120000
+Login Date: 12/21/2022 2:06:22 PM
+Time Played: 00:00:19.4120000
+Main Menu 
+
+Login Date: 12/21/2022 2:06:26 PM
+Time Played: 00:00:22.7400000
+Main Menu 
+
+Login Date: 12/21/2022 2:07:32 PM
+Time Played: 00:00:02.3790000
+Login Date: 12/21/2022 2:07:57 PM
+Time Played: 00:00:02.3530000
+Snow Global Conflict 
+
+Login Date: 12/21/2022 2:08:02 PM
+Time Played: 00:00:04.2420000
+Login Date: 12/21/2022 2:08:33 PM
+Time Played: 00:00:01.6220000
+Login Date: 12/21/2022 2:08:38 PM
+Time Played: 00:00:03.7240000
+Login Date: 12/21/2022 2:08:38 PM
+Time Played: 00:00:03.7240000
+Fun Run 
+
+Login Date: 12/21/2022 2:08:48 PM
+Time Played: 00:00:05.7140000

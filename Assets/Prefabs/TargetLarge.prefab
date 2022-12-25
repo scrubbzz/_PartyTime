@@ -51,7 +51,7 @@ MonoBehaviour:
   damageTotalRequired: 27.18
   damageAllowance: 19.6
   valueInCoins: 1
-  maxLifetime: 6
+  maxLifetime: 12
   moveSpeed: 1.93
   successBreakSound: {fileID: 8300000, guid: 18856c57c21454e41aa298c625a588f3, type: 3}
   failBreakSound: {fileID: 8300000, guid: 836728e275357564aa4439d489fec3c2, type: 3}

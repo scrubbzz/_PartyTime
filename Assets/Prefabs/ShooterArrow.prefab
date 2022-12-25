@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  arrowSpeedMultiplier: 47.39
+  arrowSpeedMultiplier: 40.96
   launchArcDegree: 5.49
   targetLayer:
     serializedVersion: 2

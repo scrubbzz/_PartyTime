@@ -12,12 +12,13 @@ namespace Minigames.Generic
         static PlayerGeneric[] playersInScene; // initialised when GetPlayers is called.
 
         // call in the minigames after time ends. returns player with the highest scorep
-        public static void GetRoundWinner()
+        public static GameObject GetRoundWinner()
         {
-            if (playersInScene == null) return;
+            if (playersInScene == null) GetPlayersInScene();
 
             GameObject player = null;
             int coins = 0;
+
             for (int i = 0; i < playersInScene.Length; i++)
             {
                 if (playersInScene[i].coinCount > coins)
@@ -26,6 +27,8 @@ namespace Minigames.Generic
                     player = playersInScene[i].gameObject;
                 }
             }
+
+            return player;
         }
 
         public static PlayerGeneric[] GetPlayersInScene()
