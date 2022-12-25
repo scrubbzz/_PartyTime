@@ -47,7 +47,8 @@ namespace FruitKahoot
         {
             if (collider.gameObject.tag == "Player")
             {
-                Manager.Instance.CollectBombs(gameObject);
+                Manager manager = collider.GetComponent<Manager>();
+                manager.CollectBombs(gameObject);
             }
 
             if (collider.gameObject.tag == "Plane")
