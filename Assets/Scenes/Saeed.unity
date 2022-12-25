@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &125489497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17555,7 +17555,7 @@ GameObject:
   - component: {fileID: 1740586723}
   - component: {fileID: 1740586722}
   - component: {fileID: 1740586725}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Plane
   m_Icon: {fileID: 0}
@@ -17653,7 +17653,7 @@ GameObject:
   - component: {fileID: 1793858964}
   - component: {fileID: 1793858963}
   - component: {fileID: 1793858966}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane (1)
   m_TagString: Plane
   m_Icon: {fileID: 0}
@@ -17750,8 +17750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4686b885ba381c46858121f03f38be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  min: 8
-  max: 8
+  minX: 2
+  maxX: 3
 --- !u!1 &1847321176 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3137786495578628170, guid: 07dfd2411454d6648ae4ae29236eeb1e, type: 3}
@@ -17831,7 +17831,7 @@ GameObject:
   - component: {fileID: 1890325496}
   - component: {fileID: 1890325495}
   - component: {fileID: 1890325498}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane (2)
   m_TagString: Plane
   m_Icon: {fileID: 0}
@@ -17928,8 +17928,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4686b885ba381c46858121f03f38be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  min: 8
-  max: 8
+  minX: 2
+  maxX: 3
 --- !u!1 &1935482995
 GameObject:
   m_ObjectHideFlags: 0

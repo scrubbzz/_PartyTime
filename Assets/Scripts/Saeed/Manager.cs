@@ -28,11 +28,8 @@ namespace FruitKahoot
         void Start()
         {
 
-
             timer = delay;
-
         }
-
 
         void Update()
         {
@@ -54,8 +51,6 @@ namespace FruitKahoot
             {
                 timer -= Time.deltaTime;
             }
-
-
         }
 
         public void CollectFruits(GameObject fruit)
