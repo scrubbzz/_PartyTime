@@ -7,6 +7,7 @@ namespace FruitKahoot
 {
     public class Timer : MonoBehaviour
     {
+        public GameObject player;
         public GameObject[] fruit;
         public GameObject[] bomb;
         public float delay;
@@ -34,7 +35,9 @@ namespace FruitKahoot
 
             if (totalTime <= 0)
             {
-                //Stop the game
+                totalTime = 0;
+                player.GetComponent<plarr>().enabled = false;
+
             }
 
             totalTime -= Time.deltaTime;
