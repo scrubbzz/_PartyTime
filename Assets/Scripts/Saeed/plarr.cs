@@ -20,7 +20,7 @@ namespace FruitKahoot
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            Physics.gravity = new Vector3(0,gravityvalue,0);
+            Physics.gravity = new Vector3(0, gravityvalue, 0);
 
         }
 
@@ -60,8 +60,6 @@ namespace FruitKahoot
 
             }
 
-
-
             position.x = position.x + input * speed;
 
             if (position.x > xlimit)
@@ -79,7 +77,7 @@ namespace FruitKahoot
 
         public void OnCollisionEnter(Collision collision)
         {
-            if(collision.gameObject.tag == "Plane")
+            if (collision.gameObject.tag == "Plane")
             {
                 isGrounded = true;
             }
