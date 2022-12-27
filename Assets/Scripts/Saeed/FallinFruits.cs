@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FruitKahoot
 {
-    public class FallinFruits : MonoBehaviour
+    public class FallinFruits : MonoBehaviour, IfallingCollectable
     {
         private float speed;
         public float minSpeed;
@@ -13,32 +13,47 @@ namespace FruitKahoot
         //public GameObject[] fallingFruits;
         void OnEnable()
         {
-
-            Vector3 position = transform.position;
-            position.x = Random.Range(-11, 12);
-            speed = Random.Range(minSpeed, maxSpeed);
-            transform.position = position;
+            OnSpawn();
 
         }
 
         void Update()
         {
-            Vector3 position = transform.position;
-            position.y = position.y - speed * Time.deltaTime;
-            transform.position = position;
-
-
+            OnFall();
 
         }
 
         public void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.tag == "Player")
+            OnTouch(collision);
+
+        }
+
+        public void OnSpawn()
+        {
+            Vector3 position = transform.position;
+            position.x = Random.Range(-11, 12);
+            speed = Random.Range(minSpeed, maxSpeed);
+            transform.position = position;
+        }
+        public void OnFall()
+        {
+            Vector3 position = transform.position;
+            position.y = position.y - speed * Time.deltaTime;
+            transform.position = position;
+
+        }
+
+        public void OnTouch(Collider collider)
+        {
+            if (collider.gameObject.tag == "Player")
             {
-                Manager.Instance.CollectFruits(gameObject);
+                Manager manager = collider.GetComponent<Manager>();
+                manager.CollectFruits(gameObject);
+
             }
 
-            if (collision.gameObject.tag == "Plane")
+            if (collider.gameObject.tag == "Plane")
             {
                 Destroy(gameObject);
             }

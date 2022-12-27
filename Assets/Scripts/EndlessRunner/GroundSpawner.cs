@@ -7,7 +7,7 @@ public class GroundSpawner : MonoBehaviour
     public GameObject groundTile;
     Vector3 spawnPoint;
 
-    public int playerCount { get; private set; }
+    public int playerCount { get; private set; } // value for ground tiles to determine when to despawn
 
     void Start()
     {

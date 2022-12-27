@@ -26,15 +26,19 @@ public class GroundTile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-            triggerCount++;
+        // make sure ground spawns in front of the first player to reach here
+        if (other.CompareTag("Player") && triggerCount == 0)
+            groundSpawner.SpawnTile(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        groundSpawner.SpawnTile(true);
-
-        if (triggerCount == groundSpawner.playerCount)
+        // increase count of players who've passed by
+        if (other.CompareTag("Player"))
+            triggerCount++;
+        
+        // once all the players have passed, despawn the object
+        if (triggerCount >= groundSpawner.playerCount)
             Destroy(gameObject, despawnTime);
     }
 

@@ -12,7 +12,7 @@ namespace StraightShootin
 
         void Start()
         {
-            timeRemaining = gameLength;
+            timeRemaining = gameLength; // set value via inspector
             StartCoroutine(CountToMinigameStart());
         }
 
